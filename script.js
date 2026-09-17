@@ -39,9 +39,15 @@ function getGreeting() {
 function typeWriter(el, text, speed = 45) {
     el.textContent = '';
     el.classList.add('is-typing');
+    el._cancelTypewriter?.();
+    let cancelled = false;
+    el._cancelTypewriter = () => {
+        cancelled = true;
+    };
     let i = 0;
 
     (function step() {
+        if (cancelled) return;
         el.textContent = text.slice(0, i);
         i++;
         if (i <= text.length) {
@@ -50,6 +56,12 @@ function typeWriter(el, text, speed = 45) {
             el.classList.remove('is-typing');
         }
     })();
+}
+
+function setHeadingText(el, text) {
+    el._cancelTypewriter?.();
+    el.classList.remove('is-typing');
+    el.textContent = text;
 }
 
 function startClock(el) {

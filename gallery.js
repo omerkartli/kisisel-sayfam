@@ -11,13 +11,13 @@ async function loadEvent(slug) {
     try {
         const response = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(slug)}`);
         if (!response.ok) {
-            titleEl.textContent = 'Etkinlik bulunamadı';
+            setHeadingText(titleEl, 'Etkinlik bulunamadı');
             statusEl.textContent = 'Bu bağlantı geçerli bir etkinliğe ait değil.';
             document.getElementById('uploadForm').hidden = true;
             return;
         }
         const event = await response.json();
-        titleEl.textContent = event.name;
+        setHeadingText(titleEl, event.name);
         statusEl.textContent = 'Fotoğrafını yükle, onaylandıktan sonra burada görünecek.';
     } catch (err) {
         statusEl.textContent = 'Sunucuya bağlanılamadı.';
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('uploadForm');
 
     if (!slug) {
-        document.getElementById('eventTitle').textContent = 'Etkinlik belirtilmedi';
+        setHeadingText(document.getElementById('eventTitle'), 'Etkinlik belirtilmedi');
         document.getElementById('eventStatus').textContent = 'Bağlantıda ?slug=... parametresi eksik.';
         form.hidden = true;
         return;
