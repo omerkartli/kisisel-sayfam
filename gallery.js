@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://api-production-137f.up.railway.app';
 
 function getSlugFromUrl() {
     return new URLSearchParams(window.location.search).get('slug');
