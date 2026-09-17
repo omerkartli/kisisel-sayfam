@@ -1,13 +1,8 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (!prefersReducedMotion) {
-        document.querySelector('.navbar')?.classList.add('is-visible');
-        document.querySelector('.card')?.classList.add('is-visible');
-    } else {
-        document.querySelector('.navbar')?.classList.add('no-anim');
-        document.querySelector('.card')?.classList.add('no-anim');
-    }
+    const revealClass = prefersReducedMotion ? 'no-anim' : 'is-visible';
+    document.querySelectorAll('.navbar, .card').forEach((el) => el.classList.add(revealClass));
 
     document.querySelectorAll('.btn').forEach((btn) => {
         btn.addEventListener('click', createRipple);

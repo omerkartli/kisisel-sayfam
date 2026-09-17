@@ -80,6 +80,76 @@ body {
     transform: none;
 }
 
+.card-wide {
+    max-width: 900px;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.upload-form input {
+    padding: 10px 12px;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.upload-message {
+    font-size: 0.85rem;
+    color: #555;
+    min-height: 1.2em;
+    margin-bottom: 20px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.gallery-item {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-grid-admin {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.gallery-admin-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.gallery-admin-name {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.gallery-admin-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.gallery-admin-actions .btn {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.85rem;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
 .avatar {
     width: 90px;
     height: 90px;

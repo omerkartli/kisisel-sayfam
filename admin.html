@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Ömer Kartlı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">Ana Sayfa</a>
+        <a href="hakkimda.html" class="nav-link">Hakkımda</a>
+        <a href="iletisim.html" class="nav-link">İletişim</a>
+    </nav>
+
+    <div class="card" id="loginCard">
+        <h1>Admin Girişi</h1>
+        <form id="loginForm" class="upload-form">
+            <input type="password" id="passwordInput" placeholder="Şifre" required>
+            <button type="submit" class="btn">Giriş Yap</button>
+        </form>
+        <p id="loginMessage" class="upload-message"></p>
+    </div>
+
+    <div class="card card-wide" id="panelCard" hidden>
+        <h1>Etkinlik Yönetimi</h1>
+
+        <form id="createEventForm" class="upload-form">
+            <input type="text" id="newEventSlug" placeholder="slug (örn: dugun-2026)" pattern="[a-z0-9-]+" required>
+            <input type="text" id="newEventName" placeholder="Etkinlik adı" required>
+            <button type="submit" class="btn">Etkinlik Oluştur</button>
+        </form>
+        <p id="createEventMessage" class="upload-message"></p>
+
+        <form id="loadPendingForm" class="upload-form">
+            <input type="text" id="reviewSlug" placeholder="Onay için slug gir" required>
+            <button type="submit" class="btn">Bekleyenleri Getir</button>
+        </form>
+
+        <div id="pendingGrid" class="gallery-grid gallery-grid-admin"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
