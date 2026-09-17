@@ -98,6 +98,30 @@ h1 {
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: #111;
+    min-height: 1.2em;
+}
+
+h1.is-typing::after {
+    content: '|';
+    margin-left: 2px;
+    animation: blink 0.8s step-start infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.live-clock {
+    font-family: "SF Mono", "Courier New", monospace;
+    font-size: 0.8rem;
+    color: #555;
+    background: #ffffff;
+    padding: 6px 14px;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
 }
 
 .bio {

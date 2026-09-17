@@ -12,7 +12,58 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.btn').forEach((btn) => {
         btn.addEventListener('click', createRipple);
     });
+
+    const heading = document.querySelector('h1');
+    if (heading) {
+        let text = heading.textContent;
+        if (heading.hasAttribute('data-greeting')) {
+            text = text.replace(/^[^,]+/, getGreeting());
+        }
+
+        if (prefersReducedMotion) {
+            heading.textContent = text;
+        } else {
+            typeWriter(heading, text);
+        }
+    }
+
+    const clock = document.getElementById('liveClock');
+    if (clock) {
+        startClock(clock);
+    }
 });
+
+function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 6) return 'İyi geceler';
+    if (hour < 12) return 'Günaydın';
+    if (hour < 18) return 'İyi günler';
+    return 'İyi akşamlar';
+}
+
+function typeWriter(el, text, speed = 45) {
+    el.textContent = '';
+    el.classList.add('is-typing');
+    let i = 0;
+
+    (function step() {
+        el.textContent = text.slice(0, i);
+        i++;
+        if (i <= text.length) {
+            setTimeout(step, speed);
+        } else {
+            el.classList.remove('is-typing');
+        }
+    })();
+}
+
+function startClock(el) {
+    function tick() {
+        el.textContent = new Date().toLocaleTimeString('tr-TR');
+    }
+    tick();
+    setInterval(tick, 1000);
+}
 
 function createRipple(event) {
     if (prefersReducedMotion) return;
