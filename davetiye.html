@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Örnek Davetiye - Ömer Kartlı</title>
+    <link rel="stylesheet" href="davetiye.css?v=1">
+</head>
+<body>
+    <div class="scene" id="scene">
+        <button class="envelope" id="envelope" type="button" aria-label="Davetiyeyi aç">
+            <span class="env-body"></span>
+
+            <span class="letter-peek">
+                <span class="peek-mark">E &middot; M</span>
+                <span class="peek-line"></span>
+                <span class="peek-line short"></span>
+            </span>
+
+            <span class="env-front"></span>
+            <span class="env-flap"></span>
+
+            <span class="monogram"><span>E</span><em>&amp;</em><span>M</span></span>
+        </button>
+
+        <p class="hint" id="hint">Davetiyeyi açmak için dokun</p>
+    </div>
+
+    <main class="invite" id="invite">
+        <span class="demo-badge">Örnek Davetiye</span>
+
+        <p class="invite-intro">Birlikteliğimizin başladığı güne</p>
+
+        <h1 class="isimler">
+            Elif
+            <span class="ve">&amp;</span>
+            Mert
+        </h1>
+
+        <div class="ayrac" aria-hidden="true">&#10086;</div>
+
+        <p class="tarih">12 Haziran 2027, Cumartesi</p>
+        <p class="saat">Nikâh 16.00 &middot; Kokteyl 17.30</p>
+
+        <p class="mekan">
+            <strong>Sait Halim Paşa Yalısı</strong>
+            Köybaşı Caddesi No: 83
+        </p>
+        <p class="adres">Yeniköy, Sarıyer / İstanbul</p>
+
+        <a class="harita-link"
+           href="https://www.google.com/maps/search/?api=1&amp;query=Sait+Halim+Pa%C5%9Fa+Yal%C4%B1s%C4%B1+Yenik%C3%B6y+Sar%C4%B1yer"
+           target="_blank" rel="noopener">Konumu Haritada Aç</a>
+
+        <div class="ayrac" aria-hidden="true">&#10086;</div>
+
+        <p class="gerisayim-baslik">Düğüne Kalan Süre</p>
+
+        <div class="gerisayim" id="gerisayim" role="timer" aria-live="off">
+            <div class="sayac-kutu">
+                <span class="sayac-deger" id="gun">--</span>
+                <span class="sayac-etiket">Gün</span>
+            </div>
+            <div class="sayac-kutu">
+                <span class="sayac-deger" id="saat">--</span>
+                <span class="sayac-etiket">Saat</span>
+            </div>
+            <div class="sayac-kutu">
+                <span class="sayac-deger" id="dakika">--</span>
+                <span class="sayac-etiket">Dakika</span>
+            </div>
+            <div class="sayac-kutu saniye">
+                <span class="sayac-deger" id="saniye">--</span>
+                <span class="sayac-etiket">Saniye</span>
+            </div>
+        </div>
+
+        <p class="gerisayim-not" id="gerisayimNot"></p>
+    </main>
+
+    <footer class="alt-bar">
+        <a class="alt-link" href="urunler.html">&larr; Ürünler</a>
+        <a class="alt-link" href="#" id="tekrarIzle" hidden>Tekrar İzle</a>
+        <a class="alt-link vurgu" href="iletisim.html">İletişim</a>
+    </footer>
+
+    <script src="davetiye.js?v=1"></script>
+</body>
+</html>
