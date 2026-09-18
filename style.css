@@ -30,7 +30,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     margin-bottom: 25px;
     width: 100%;
-    max-width: 420px;
+    max-width: 520px;
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -303,4 +303,64 @@ h1.is-typing::after {
     .bio {
         font-size: 0.9rem;
     }
+}
+
+/* --- Ürün kartları --- */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    text-align: left;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    border: 1px solid #e6eaef;
+    border-radius: 14px;
+    background: #fbfcfd;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+a.product-card:hover {
+    transform: translateY(-4px);
+    border-color: #0969da;
+    box-shadow: 0 12px 24px rgba(9, 105, 218, 0.12);
+}
+
+.product-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.product-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.product-desc {
+    font-size: 0.88rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.product-cta {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #0969da;
+}
+
+.product-card.is-soon {
+    opacity: 0.6;
+}
+
+.product-card.is-soon .product-cta {
+    color: #888;
 }
