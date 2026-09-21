@@ -150,9 +150,82 @@ function renderEvents(events) {
         galleryLink.textContent = 'Galeriyi Aç';
         actions.appendChild(galleryLink);
 
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'btn btn-kucuk btn-tehlike';
+        deleteBtn.textContent = 'Sil';
+        actions.appendChild(deleteBtn);
+
         row.appendChild(actions);
+
+        const onay = buildDeleteConfirm(event, row, actions);
+        deleteBtn.addEventListener('click', () => {
+            actions.hidden = true;
+            onay.hidden = false;
+        });
+        row.appendChild(onay);
+
         list.appendChild(row);
     });
+}
+
+async function deleteEvent(slug, row) {
+    row.classList.add('is-siliniyor');
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/admin/events/${encodeURIComponent(slug)}`, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${getToken()}` },
+        });
+
+        if (response.status === 401) {
+            logout();
+            return;
+        }
+        if (response.status !== 204 && response.status !== 404) {
+            row.classList.remove('is-siliniyor');
+            row.querySelector('.event-onay-mesaj').textContent = 'Silinemedi, tekrar dene.';
+            return;
+        }
+
+        loadEvents();
+    } catch (err) {
+        row.classList.remove('is-siliniyor');
+        row.querySelector('.event-onay-mesaj').textContent = 'Sunucuya bağlanılamadı.';
+    }
+}
+
+function buildDeleteConfirm(event, row, actions) {
+    const onay = document.createElement('div');
+    onay.className = 'event-onay';
+
+    const mesaj = document.createElement('span');
+    mesaj.className = 'event-onay-mesaj';
+    const toplam = event.pending_count + event.approved_count;
+    mesaj.textContent = toplam > 0
+        ? `"${event.name}" ve ${toplam} fotoğrafı kalıcı olarak silinsin mi?`
+        : `"${event.name}" silinsin mi?`;
+    onay.appendChild(mesaj);
+
+    const evetBtn = document.createElement('button');
+    evetBtn.type = 'button';
+    evetBtn.className = 'btn btn-kucuk btn-tehlike';
+    evetBtn.textContent = 'Evet, sil';
+    evetBtn.addEventListener('click', () => deleteEvent(event.slug, row));
+    onay.appendChild(evetBtn);
+
+    const vazgecBtn = document.createElement('button');
+    vazgecBtn.type = 'button';
+    vazgecBtn.className = 'btn btn-kucuk';
+    vazgecBtn.textContent = 'Vazgeç';
+    vazgecBtn.addEventListener('click', () => {
+        onay.hidden = true;
+        actions.hidden = false;
+    });
+    onay.appendChild(vazgecBtn);
+
+    onay.hidden = true;
+    return onay;
 }
 
 async function loadEvents() {

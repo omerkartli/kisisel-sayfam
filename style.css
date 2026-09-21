@@ -22,6 +22,8 @@
     --whatsapp-koyu: #1fb855;
     --uyari-zemin: #fff4e5;
     --uyari: #8a5300;
+    --tehlike-zemin: #fdecea;
+    --tehlike: #a3231f;
     --yumusak: #f0f2f5;
     --etiket: #eef2f7;
     --cizgi: #e6eaef;
@@ -521,13 +523,46 @@ a.product-card:hover {
     gap: 8px;
 }
 
+.btn-tehlike {
+    background: var(--tehlike-zemin);
+    color: var(--tehlike);
+}
+
+.btn-tehlike:hover {
+    background: var(--tehlike);
+    color: var(--kart);
+}
+
+.event-onay {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px solid var(--cizgi);
+}
+
+.event-onay-mesaj {
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.85rem;
+    color: var(--tehlike);
+}
+
+.event-row.is-siliniyor {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 @media (max-width: 480px) {
     .event-row {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .event-actions .btn-kucuk {
+    .event-actions .btn-kucuk,
+    .event-onay .btn-kucuk {
         flex: 1;
     }
 }
