@@ -2,7 +2,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 document.addEventListener('DOMContentLoaded', () => {
     const revealClass = prefersReducedMotion ? 'no-anim' : 'is-visible';
-    document.querySelectorAll('.navbar, .card').forEach((el) => el.classList.add(revealClass));
+    document.querySelectorAll('.card').forEach((el) => el.classList.add(revealClass));
 
     document.querySelectorAll('.btn').forEach((btn) => {
         btn.addEventListener('click', createRipple);
@@ -20,11 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             typeWriter(heading, text);
         }
-    }
-
-    const clock = document.getElementById('liveClock');
-    if (clock) {
-        startClock(clock);
     }
 });
 
@@ -62,14 +57,6 @@ function setHeadingText(el, text) {
     el._cancelTypewriter?.();
     el.classList.remove('is-typing');
     el.textContent = text;
-}
-
-function startClock(el) {
-    function tick() {
-        el.textContent = new Date().toLocaleTimeString('tr-TR');
-    }
-    tick();
-    setInterval(tick, 1000);
 }
 
 function createRipple(event) {

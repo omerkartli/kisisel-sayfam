@@ -6,28 +6,30 @@
 }
 
 :root {
-    --zemin: #f4f6f8;
+    --zemin: #f4f1ec;
     --kart: #ffffff;
-    --kart-ic: #fbfcfd;
-    --metin: #333;
-    --metin-koyu: #24292e;
-    --baslik: #111;
-    --soluk: #666;
-    --soluk-koyu: #555;
-    --silik: #888;
-    --vurgu: #0969da;
-    --vurgu-soluk: rgba(9, 105, 218, 0.12);
-    --vurgu-koyu: #0b4f9e;
+    --kart-ic: #faf8f5;
+    --metin: #3a3632;
+    --metin-koyu: #1f1c1a;
+    --baslik: #1f1c1a;
+    --soluk: #6e675f;
+    --soluk-koyu: #57514a;
+    --silik: #8e867d;
+    --vurgu: #5b5570;
+    --vurgu-soluk: rgba(91, 85, 112, 0.12);
+    --vurgu-koyu: #453f58;
+    --yumusak: #ece7df;
+    --etiket: #ece7df;
+    --cizgi: #ded7cc;
+    --cizgi-alan: #d6cec2;
+    --bant: #c9c5d6;
+    --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
     --whatsapp: #25d366;
     --whatsapp-koyu: #1fb855;
     --uyari-zemin: #fff4e5;
     --uyari: #8a5300;
     --tehlike-zemin: #fdecea;
     --tehlike: #a3231f;
-    --yumusak: #f0f2f5;
-    --etiket: #eef2f7;
-    --cizgi: #e6eaef;
-    --cizgi-alan: #e1e4e8;
     --radius: 16px;
     --radius-sm: 8px;
     --golge: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -41,56 +43,22 @@
 body {
     background: var(--zemin);
     color: var(--metin);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     min-height: 100vh;
-    padding: 20px;
 }
 
-.navbar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    background: var(--kart);
-    padding: 8px;
-    border-radius: 12px;
-    box-shadow: var(--golge-sm);
-    margin-bottom: 25px;
-    width: 100%;
-    max-width: 520px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+.icerik {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 64px);
 }
 
-.navbar.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--soluk-koyu);
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 8px 14px;
-    border-radius: var(--radius-sm);
-    transition: all 0.2s ease;
-}
-
-.nav-link:hover {
-    background: var(--yumusak);
-}
-
-.nav-link.active {
-    background: var(--vurgu);
-    color: var(--kart);
+.site-nav-link.is-aktif {
+    border-bottom-color: var(--baslik);
 }
 
 .card {
     background: var(--kart);
+    margin: 0 auto;
     max-width: 420px;
     width: 100%;
     padding: 35px 25px;
@@ -107,8 +75,7 @@ body {
     transform: translateY(0);
 }
 
-.card.no-anim,
-.navbar.no-anim {
+.card.no-anim {
     opacity: 1;
     transform: none;
 }
@@ -183,33 +150,13 @@ body {
     cursor: pointer;
 }
 
-.avatar {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border: 3px solid var(--yumusak);
-    transition: transform 0.3s ease;
-}
-
-.avatar:hover {
-    transform: scale(1.06) rotate(-2deg);
-}
-
 h1 {
-    font-size: 1.5rem;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.9rem;
     margin-bottom: 10px;
     color: var(--baslik);
     min-height: 1.2em;
-}
-
-.role {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--vurgu);
-    letter-spacing: 0.01em;
-    margin-bottom: 14px;
 }
 
 h1.is-typing::after {
@@ -224,27 +171,11 @@ h1.is-typing::after {
     }
 }
 
-.live-clock {
-    font-family: "SF Mono", "Courier New", monospace;
-    font-size: 0.8rem;
-    color: var(--soluk-koyu);
-    background: var(--kart);
-    padding: 6px 14px;
-    border-radius: 999px;
-    box-shadow: var(--golge-sm);
-    margin-bottom: 20px;
-}
-
 .bio {
     font-size: 0.95rem;
     color: var(--soluk);
     line-height: 1.5;
     margin-bottom: 25px;
-}
-
-.skills {
-    margin-bottom: 25px;
-    text-align: left;
 }
 
 .skills-title {
@@ -358,12 +289,6 @@ h1.is-typing::after {
 
     .card {
         padding: 25px 18px;
-        border-radius: 12px;
-    }
-
-    .avatar {
-        width: 75px;
-        height: 75px;
     }
 
     h1 {
@@ -570,5 +495,220 @@ a.product-card:hover {
     .event-actions .btn-kucuk,
     .event-onay .btn-kucuk {
         flex: 1;
+    }
+}
+
+/* --- Hero düzeni (ana sayfa) --- */
+
+body.sayfa-hero {
+    display: block;
+    padding: 0;
+    background: var(--zemin);
+}
+
+.site-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 18px clamp(20px, 5vw, 64px);
+    background: var(--zemin);
+    border-bottom: 1px solid var(--baslik);
+}
+
+.marka {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    letter-spacing: 0.01em;
+    color: var(--baslik);
+    text-decoration: none;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 32px);
+}
+
+.site-nav-link {
+    color: var(--baslik);
+    text-decoration: none;
+    font-size: 0.92rem;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.site-nav-link:hover {
+    border-bottom-color: var(--baslik);
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.pill:hover {
+    transform: translateY(-1px);
+}
+
+.pill-koyu {
+    background: var(--baslik);
+    color: var(--zemin);
+}
+
+.pill-wa {
+    background: var(--whatsapp);
+    color: #ffffff;
+}
+
+.pill-wa:hover {
+    background: var(--whatsapp-koyu);
+}
+
+.pill-cizgi {
+    border-color: var(--baslik);
+    color: var(--baslik);
+}
+
+.pill-cizgi:hover {
+    background: var(--baslik);
+    color: var(--zemin);
+}
+
+.hero {
+    background: var(--bant);
+    padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 64px);
+}
+
+.hero-ic {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: clamp(28px, 5vw, 72px);
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.hero-ustbilgi {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vurgu-koyu);
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    color: var(--baslik);
+    margin-bottom: 20px;
+}
+
+.hero-alt {
+    font-size: clamp(1rem, 1.5vw, 1.12rem);
+    line-height: 1.6;
+    color: var(--metin);
+    max-width: 44ch;
+    margin-bottom: 30px;
+}
+
+.hero-butonlar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-gorsel {
+    margin: 0;
+    justify-self: end;
+    width: 100%;
+    max-width: 300px;
+}
+
+.hero-gorsel {
+    overflow: hidden;
+    border-radius: 28px;
+}
+
+.hero-gorsel img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    transform: scale(1.12);
+}
+
+.serit {
+    padding: clamp(32px, 5vw, 56px) clamp(20px, 5vw, 64px);
+    max-width: 1120px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.serit-baslik {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--baslik);
+    margin-bottom: 18px;
+}
+
+.serit-etiketler {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.site-alt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 22px clamp(20px, 5vw, 64px);
+    border-top: 1px solid var(--cizgi);
+    font-size: 0.82rem;
+    color: var(--soluk);
+}
+
+.site-alt a {
+    color: var(--soluk);
+}
+
+@media (max-width: 760px) {
+    .hero-ic {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-gorsel {
+        order: -1;
+        justify-self: start;
+        max-width: 200px;
+    }
+
+    .hero-butonlar .pill {
+        flex: 1;
+        min-width: 160px;
+    }
+
+    .site-alt {
+        justify-content: flex-start;
     }
 }
