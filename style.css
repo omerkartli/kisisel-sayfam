@@ -533,6 +533,12 @@ a.product-card:hover {
     color: var(--kart);
 }
 
+.paylasim-linki {
+    color: var(--vurgu);
+    font-weight: 500;
+    word-break: break-all;
+}
+
 .event-onay {
     display: flex;
     align-items: center;
