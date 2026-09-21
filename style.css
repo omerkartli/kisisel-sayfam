@@ -17,6 +17,9 @@
     --silik: #888;
     --vurgu: #0969da;
     --vurgu-soluk: rgba(9, 105, 218, 0.12);
+    --vurgu-koyu: #0b4f9e;
+    --whatsapp: #25d366;
+    --whatsapp-koyu: #1fb855;
     --yumusak: #f0f2f5;
     --etiket: #eef2f7;
     --cizgi: #e6eaef;
@@ -268,7 +271,7 @@ h1.is-typing::after {
 
 .tag-ai {
     background: var(--vurgu-soluk);
-    color: #0b4f9e;
+    color: var(--vurgu-koyu);
 }
 
 .links {
@@ -293,6 +296,30 @@ h1.is-typing::after {
     background: var(--vurgu);
     color: var(--kart);
     transform: translateY(-2px);
+}
+
+.btn-ikon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-ikon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.btn-wa {
+    background: var(--whatsapp);
+    color: var(--kart);
+}
+
+.btn-wa:hover {
+    background: var(--whatsapp-koyu);
+    color: var(--kart);
 }
 
 .btn-primary {
