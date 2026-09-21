@@ -45,6 +45,22 @@ async function login(password) {
     }
 }
 
+function eventUrl(slug) {
+    return new URL(`etkinlik.html?slug=${encodeURIComponent(slug)}`, window.location.href).href;
+}
+
+function showShareLink(container, slug) {
+    container.textContent = 'Oluşturuldu! Paylaşım linki: ';
+
+    const link = document.createElement('a');
+    link.href = eventUrl(slug);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.className = 'paylasim-linki';
+    link.textContent = eventUrl(slug);
+    container.appendChild(link);
+}
+
 async function createEvent(slug, name) {
     const message = document.getElementById('createEventMessage');
     message.textContent = 'Oluşturuluyor...';
@@ -60,7 +76,7 @@ async function createEvent(slug, name) {
         });
 
         if (response.status === 201) {
-            message.textContent = `Oluşturuldu! Paylaşım linki: etkinlik.html?slug=${slug}`;
+            showShareLink(message, slug);
             loadEvents();
         } else if (response.status === 409) {
             message.textContent = 'Bu slug zaten kullanılıyor.';
@@ -144,7 +160,7 @@ function renderEvents(events) {
 
         const galleryLink = document.createElement('a');
         galleryLink.className = 'btn btn-kucuk';
-        galleryLink.href = `etkinlik.html?slug=${encodeURIComponent(event.slug)}`;
+        galleryLink.href = eventUrl(event.slug);
         galleryLink.target = '_blank';
         galleryLink.rel = 'noopener';
         galleryLink.textContent = 'Galeriyi Aç';
