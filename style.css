@@ -712,3 +712,528 @@ body.sayfa-hero {
         justify-content: flex-start;
     }
 }
+
+/* --- Etkinlik sayfası: başlık ve yükleme --- */
+
+.etkinlik-bas {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 44px) clamp(20px, 5vw, 64px) clamp(16px, 2.5vw, 26px);
+    text-align: center;
+}
+
+.etkinlik-bas h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 10px;
+}
+
+.etkinlik-durum {
+    color: var(--soluk);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.galeri-ipucu {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--cizgi);
+    background: var(--kart);
+    color: var(--baslik);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.galeri-ipucu:hover {
+    border-color: var(--baslik);
+    transform: translateY(2px);
+}
+
+.galeri-ipucu-ok {
+    animation: ipucu-in 1.8s ease-in-out infinite;
+}
+
+@keyframes ipucu-in {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .galeri-ipucu-ok {
+        animation: none;
+    }
+}
+
+.yukleme {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.yukleme-alan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px;
+    border: 1px dashed var(--cizgi-alan);
+    border-radius: var(--radius);
+    background: var(--kart-ic);
+    color: var(--soluk);
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.yukleme-alan:hover,
+.yukleme-alan.is-uzerinde {
+    border-color: var(--baslik);
+    background: var(--kart);
+    color: var(--baslik);
+}
+
+.yukleme-alan.is-secili {
+    border-style: solid;
+    border-color: var(--baslik);
+    color: var(--baslik);
+}
+
+.yukleme-ikon {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.yukleme-alan input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.yukleme-satir {
+    display: flex;
+    gap: 10px;
+}
+
+.yukleme-satir input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 16px;
+    border: 1px solid var(--cizgi-alan);
+    border-radius: 999px;
+    background: var(--kart);
+    font-size: 0.92rem;
+    font-family: inherit;
+    color: var(--metin);
+}
+
+.yukleme-satir input[type="text"]:focus {
+    outline: none;
+    border-color: var(--baslik);
+}
+
+.yukleme-satir button {
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.yukleme-mesaj {
+    margin-top: 12px;
+    min-height: 1.3em;
+    font-size: 0.88rem;
+    color: var(--soluk);
+    text-align: center;
+}
+
+/* --- Fotoğraf küresi --- */
+
+.sahne {
+    position: relative;
+    scroll-margin-top: 0;
+    background:
+        radial-gradient(circle at 50% 42%, #2b2839 0%, #16151d 55%, #0d0d11 100%);
+    padding: clamp(28px, 4vw, 44px) clamp(16px, 4vw, 48px) clamp(28px, 5vw, 48px);
+    overflow: hidden;
+}
+
+/* Bej bölümden koyu sahneye yumuşak geçiş */
+.sahne::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 96px;
+    background: linear-gradient(to bottom, var(--zemin) 0%, rgba(244, 241, 236, 0.5) 34%, rgba(244, 241, 236, 0.16) 62%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sahne-ust {
+    position: relative;
+    z-index: 3;
+}
+
+.sahne-ust {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 1120px;
+    margin: 0 auto 8px;
+}
+
+.sahne-sayi {
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sahne-gorunum {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.gorunum-btn {
+    border: 0;
+    background: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: inherit;
+    font-size: 0.82rem;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.gorunum-btn.is-secili {
+    background: rgba(255, 255, 255, 0.92);
+    color: #16151d;
+}
+
+.kure-alan {
+    position: relative;
+    height: clamp(420px, 66vh, 620px);
+    perspective: 1100px;
+    touch-action: none;
+    cursor: grab;
+}
+
+.kure-alan.is-suruklu {
+    cursor: grabbing;
+}
+
+.kure {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.kure-parca {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
+    /* Kürenin arka yüzüne düşen parçalar görünmesin: aksi halde
+       fotoğraflar ayna görüntüsü gibi ters okunur */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    cursor: zoom-in;
+    border: 0;
+    padding: 0;
+}
+
+.kure-parca.is-yuklendi {
+    opacity: 1;
+}
+
+.kure-parca img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.kure-parca::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    transition: box-shadow 0.2s ease;
+}
+
+.kure-parca:hover::after,
+.kure-parca:focus-visible::after {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+}
+
+.sahne-ipucu {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 6px;
+}
+
+.sahne-durum {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.92rem;
+    padding: 24px 0;
+}
+
+/* --- Izgara görünümü --- */
+
+.izgara {
+    columns: 4 200px;
+    column-gap: 12px;
+    max-width: 1120px;
+    margin: 12px auto 0;
+}
+
+.izgara-parca {
+    display: block;
+    width: 100%;
+    break-inside: avoid;
+    margin-bottom: 12px;
+    border: 0;
+    padding: 0;
+    background: none;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: zoom-in;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.25s ease;
+}
+
+.izgara-parca.is-yuklendi {
+    opacity: 1;
+}
+
+.izgara-parca:hover {
+    transform: translateY(-3px);
+}
+
+.izgara-parca img {
+    width: 100%;
+    display: block;
+}
+
+/* --- Lightbox --- */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 10, 13, 0.94);
+    padding: 24px;
+}
+
+.lb-icerik {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.lb-icerik img {
+    max-width: min(92vw, 1100px);
+    max-height: 82vh;
+    border-radius: 12px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+}
+
+.lb-sayac {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.lb-kapat,
+.lb-ok {
+    position: absolute;
+    border: 0;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 1;
+    transition: background 0.2s ease;
+}
+
+.lb-kapat:hover,
+.lb-ok:hover {
+    background: rgba(255, 255, 255, 0.24);
+}
+
+.lb-kapat {
+    top: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.5rem;
+}
+
+.lb-ok {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    font-size: 1.8rem;
+}
+
+.lb-onceki {
+    left: clamp(12px, 3vw, 32px);
+}
+
+.lb-sonraki {
+    right: clamp(12px, 3vw, 32px);
+}
+
+body.lb-acik {
+    overflow: hidden;
+}
+
+@media (max-width: 560px) {
+    .kure-parca {
+        width: 72px;
+        height: 72px;
+        margin: -36px 0 0 -36px;
+    }
+
+    .yukleme-satir {
+        flex-direction: column;
+    }
+
+    .lb-ok {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kure-parca,
+    .izgara-parca {
+        transition: none;
+    }
+}
+
+/* --- Ağaç görünümü --- */
+
+.agac-alan {
+    position: relative;
+    height: clamp(420px, 66vh, 620px);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.agac-dallar {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.agac-dallar path {
+    stroke: rgba(226, 214, 196, 0.34);
+    stroke-linecap: round;
+    fill: none;
+}
+
+.agac-meyveler {
+    position: absolute;
+    inset: 0;
+}
+
+.agac-parca {
+    position: absolute;
+    width: 74px;
+    height: 74px;
+    margin: -37px 0 0 -37px;
+    border: 0;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+    cursor: zoom-in;
+    opacity: 0;
+    transform-origin: 50% -40%;
+    transition: opacity 0.6s ease;
+    animation: dal-salin 6s ease-in-out infinite;
+}
+
+.agac-parca.is-yuklendi {
+    opacity: 1;
+}
+
+.agac-parca img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.agac-parca:hover img,
+.agac-parca:focus-visible img {
+    transform: scale(1.1);
+}
+
+.agac-parca::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.agac-parca:hover::after {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes dal-salin {
+    0%, 100% { transform: rotate(-1.2deg); }
+    50% { transform: rotate(1.2deg); }
+}
+
+@media (max-width: 560px) {
+    .agac-parca {
+        width: 54px;
+        height: 54px;
+        margin: -27px 0 0 -27px;
+        border-radius: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .agac-parca {
+        animation: none;
+    }
+}
