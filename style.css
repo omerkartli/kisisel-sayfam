@@ -5,13 +5,35 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+:root {
+    --zemin: #f4f6f8;
+    --kart: #ffffff;
+    --kart-ic: #fbfcfd;
+    --metin: #333;
+    --metin-koyu: #24292e;
+    --baslik: #111;
+    --soluk: #666;
+    --soluk-koyu: #555;
+    --silik: #888;
+    --vurgu: #0969da;
+    --vurgu-soluk: rgba(9, 105, 218, 0.12);
+    --yumusak: #f0f2f5;
+    --etiket: #eef2f7;
+    --cizgi: #e6eaef;
+    --cizgi-alan: #e1e4e8;
+    --radius: 16px;
+    --radius-sm: 8px;
+    --golge: 0 10px 25px rgba(0, 0, 0, 0.05);
+    --golge-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
 [hidden] {
     display: none !important;
 }
 
 body {
-    background: #f4f6f8;
-    color: #333;
+    background: var(--zemin);
+    color: var(--metin);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,10 +46,10 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    background: #ffffff;
+    background: var(--kart);
     padding: 8px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--golge-sm);
     margin-bottom: 25px;
     width: 100%;
     max-width: 520px;
@@ -43,30 +65,30 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: #555;
+    color: var(--soluk-koyu);
     font-size: 0.9rem;
     font-weight: 500;
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     transition: all 0.2s ease;
 }
 
 .nav-link:hover {
-    background: #f0f2f5;
+    background: var(--yumusak);
 }
 
 .nav-link.active {
-    background: #0969da;
-    color: #ffffff;
+    background: var(--vurgu);
+    color: var(--kart);
 }
 
 .card {
-    background: #ffffff;
+    background: var(--kart);
     max-width: 420px;
     width: 100%;
     padding: 35px 25px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius);
+    box-shadow: var(--golge);
     text-align: center;
     opacity: 0;
     transform: translateY(16px);
@@ -97,15 +119,15 @@ body {
 
 .upload-form input {
     padding: 10px 12px;
-    border: 1px solid #e1e4e8;
-    border-radius: 8px;
+    border: 1px solid var(--cizgi-alan);
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
     font-family: inherit;
 }
 
 .upload-message {
     font-size: 0.85rem;
-    color: #555;
+    color: var(--soluk-koyu);
     min-height: 1.2em;
     margin-bottom: 20px;
 }
@@ -120,8 +142,8 @@ body {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--golge-sm);
 }
 
 .gallery-grid-admin {
@@ -137,7 +159,7 @@ body {
 
 .gallery-admin-name {
     font-size: 0.8rem;
-    color: #666;
+    color: var(--soluk);
 }
 
 .gallery-admin-actions {
@@ -160,7 +182,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
-    border: 3px solid #f0f2f5;
+    border: 3px solid var(--yumusak);
     transition: transform 0.3s ease;
 }
 
@@ -171,8 +193,16 @@ body {
 h1 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #111;
+    color: var(--baslik);
     min-height: 1.2em;
+}
+
+.role {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--vurgu);
+    letter-spacing: 0.01em;
+    margin-bottom: 14px;
 }
 
 h1.is-typing::after {
@@ -190,17 +220,17 @@ h1.is-typing::after {
 .live-clock {
     font-family: "SF Mono", "Courier New", monospace;
     font-size: 0.8rem;
-    color: #555;
-    background: #ffffff;
+    color: var(--soluk-koyu);
+    background: var(--kart);
     padding: 6px 14px;
     border-radius: 999px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--golge-sm);
     margin-bottom: 20px;
 }
 
 .bio {
     font-size: 0.95rem;
-    color: #666;
+    color: var(--soluk);
     line-height: 1.5;
     margin-bottom: 25px;
 }
@@ -214,7 +244,7 @@ h1.is-typing::after {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #888;
+    color: var(--silik);
     margin-bottom: 10px;
     text-align: center;
 }
@@ -228,17 +258,17 @@ h1.is-typing::after {
 }
 
 .tag {
-    background: #eef2f7;
-    color: #333;
+    background: var(--etiket);
+    color: var(--metin);
     font-size: 0.8rem;
     font-weight: 500;
     padding: 5px 12px;
     border-radius: 999px;
 }
 
-.tag-security {
-    background: #fdecea;
-    color: #a3231f;
+.tag-ai {
+    background: var(--vurgu-soluk);
+    color: #0b4f9e;
 }
 
 .links {
@@ -251,18 +281,27 @@ h1.is-typing::after {
     position: relative;
     overflow: hidden;
     text-decoration: none;
-    color: #24292e;
-    background: #f0f2f5;
+    color: var(--metin-koyu);
+    background: var(--yumusak);
     padding: 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     font-weight: 500;
     transition: all 0.2s ease;
 }
 
 .btn:hover {
-    background: #0969da;
-    color: #ffffff;
+    background: var(--vurgu);
+    color: var(--kart);
     transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: var(--vurgu);
+    color: var(--kart);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.08);
 }
 
 .ripple {
@@ -319,9 +358,9 @@ h1.is-typing::after {
     flex-direction: column;
     gap: 6px;
     padding: 20px;
-    border: 1px solid #e6eaef;
+    border: 1px solid var(--cizgi);
     border-radius: 14px;
-    background: #fbfcfd;
+    background: var(--kart-ic);
     text-decoration: none;
     color: inherit;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -329,8 +368,8 @@ h1.is-typing::after {
 
 a.product-card:hover {
     transform: translateY(-4px);
-    border-color: #0969da;
-    box-shadow: 0 12px 24px rgba(9, 105, 218, 0.12);
+    border-color: var(--vurgu);
+    box-shadow: 0 12px 24px var(--vurgu-soluk);
 }
 
 .product-icon {
@@ -341,12 +380,12 @@ a.product-card:hover {
 .product-name {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #111;
+    color: var(--baslik);
 }
 
 .product-desc {
     font-size: 0.88rem;
-    color: #666;
+    color: var(--soluk);
     line-height: 1.5;
 }
 
@@ -354,7 +393,7 @@ a.product-card:hover {
     margin-top: 6px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #0969da;
+    color: var(--vurgu);
 }
 
 .product-card.is-soon {
@@ -362,5 +401,5 @@ a.product-card:hover {
 }
 
 .product-card.is-soon .product-cta {
-    color: #888;
+    color: var(--silik);
 }
