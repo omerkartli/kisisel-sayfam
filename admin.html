@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Paneli - Ömer Kartlı</title>
-    <link rel="stylesheet" href="style.css?v=1">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
     <nav class="navbar">
         <a href="index.html" class="nav-link">Ana Sayfa</a>
-        <a href="urunler.html" class="nav-link">Diğer Ürünler</a>
+        <a href="urunler.html" class="nav-link">Dijital Çözümler</a>
     </nav>
 
     <div class="card" id="loginCard">
@@ -24,22 +24,36 @@
     <div class="card card-wide" id="panelCard" hidden>
         <h1>Etkinlik Yönetimi</h1>
 
-        <form id="createEventForm" class="upload-form">
-            <input type="text" id="newEventSlug" placeholder="slug (örn: dugun-2026)" pattern="[a-z0-9-]+" required>
-            <input type="text" id="newEventName" placeholder="Etkinlik adı" required>
-            <button type="submit" class="btn">Etkinlik Oluştur</button>
-        </form>
-        <p id="createEventMessage" class="upload-message"></p>
+        <section class="panel-bolum">
+            <div class="bolum-baslik">
+                <h2 class="skills-title">Etkinlikler</h2>
+                <button type="button" id="loadEventsBtn" class="btn btn-kucuk">Etkinlikleri Getir</button>
+            </div>
+            <div id="eventList" class="event-list"></div>
+        </section>
 
-        <form id="loadPendingForm" class="upload-form">
-            <input type="text" id="reviewSlug" placeholder="Onay için slug gir" required>
-            <button type="submit" class="btn">Bekleyenleri Getir</button>
-        </form>
+        <section class="panel-bolum">
+            <h2 class="skills-title">Yeni Etkinlik</h2>
+            <form id="createEventForm" class="upload-form">
+                <input type="text" id="newEventSlug" placeholder="slug (örn: dugun-2026)" pattern="[a-z0-9-]+" required>
+                <input type="text" id="newEventName" placeholder="Etkinlik adı" required>
+                <button type="submit" class="btn">Etkinlik Oluştur</button>
+            </form>
+            <p id="createEventMessage" class="upload-message"></p>
+        </section>
 
-        <div id="pendingGrid" class="gallery-grid gallery-grid-admin"></div>
+        <section class="panel-bolum">
+            <h2 class="skills-title">Onay Bekleyen Fotoğraflar</h2>
+            <form id="loadPendingForm" class="upload-form">
+                <input type="text" id="reviewSlug" placeholder="Onay için slug gir" required>
+                <button type="submit" class="btn">Bekleyenleri Getir</button>
+            </form>
+
+            <div id="pendingGrid" class="gallery-grid gallery-grid-admin"></div>
+        </section>
     </div>
 
     <script src="script.js?v=4"></script>
-    <script src="admin.js?v=2"></script>
+    <script src="admin.js?v=3"></script>
 </body>
 </html>
