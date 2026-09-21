@@ -20,6 +20,8 @@
     --vurgu-koyu: #0b4f9e;
     --whatsapp: #25d366;
     --whatsapp-koyu: #1fb855;
+    --uyari-zemin: #fff4e5;
+    --uyari: #8a5300;
     --yumusak: #f0f2f5;
     --etiket: #eef2f7;
     --cizgi: #e6eaef;
@@ -429,4 +431,103 @@ a.product-card:hover {
 
 .product-card.is-soon .product-cta {
     color: var(--silik);
+}
+
+/* --- Admin paneli: etkinlik listesi --- */
+
+.panel-bolum {
+    text-align: left;
+    margin-bottom: 26px;
+}
+
+.panel-bolum:last-of-type {
+    margin-bottom: 0;
+}
+
+.panel-bolum .skills-title {
+    text-align: left;
+}
+
+.bolum-baslik {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bolum-baslik .skills-title {
+    margin-bottom: 0;
+}
+
+.btn-kucuk {
+    padding: 7px 12px;
+    font-size: 0.82rem;
+    border: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.event-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--cizgi);
+    border-radius: var(--radius-sm);
+    background: var(--kart-ic);
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.event-name {
+    font-weight: 600;
+    color: var(--baslik);
+}
+
+.event-meta {
+    font-size: 0.82rem;
+    color: var(--soluk);
+}
+
+.event-rozetler {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.event-rozet-bekleyen {
+    background: var(--uyari-zemin);
+    color: var(--uyari);
+}
+
+.event-actions {
+    display: flex;
+    gap: 8px;
+}
+
+@media (max-width: 480px) {
+    .event-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .event-actions .btn-kucuk {
+        flex: 1;
+    }
 }

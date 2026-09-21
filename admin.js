@@ -12,6 +12,7 @@ function setToken(token) {
 function showPanel() {
     document.getElementById('loginCard').hidden = true;
     document.getElementById('panelCard').hidden = false;
+    loadEvents();
 }
 
 function logout() {
@@ -60,6 +61,7 @@ async function createEvent(slug, name) {
 
         if (response.status === 201) {
             message.textContent = `Oluşturuldu! Paylaşım linki: etkinlik.html?slug=${slug}`;
+            loadEvents();
         } else if (response.status === 409) {
             message.textContent = 'Bu slug zaten kullanılıyor.';
         } else if (response.status === 400) {
@@ -72,6 +74,108 @@ async function createEvent(slug, name) {
         }
     } catch (err) {
         message.textContent = 'Sunucuya bağlanılamadı.';
+    }
+}
+
+function formatDate(isoString) {
+    const date = new Date(isoString);
+    return Number.isNaN(date.getTime())
+        ? ''
+        : date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function renderEvents(events) {
+    const list = document.getElementById('eventList');
+    list.innerHTML = '';
+
+    if (events.length === 0) {
+        list.innerHTML = '<p class="bio">Henüz etkinlik oluşturulmamış.</p>';
+        return;
+    }
+
+    events.forEach((event) => {
+        const row = document.createElement('div');
+        row.className = 'event-row';
+
+        const info = document.createElement('div');
+        info.className = 'event-info';
+
+        const name = document.createElement('span');
+        name.className = 'event-name';
+        name.textContent = event.name;
+        info.appendChild(name);
+
+        const meta = document.createElement('span');
+        meta.className = 'event-meta';
+        meta.textContent = `${event.slug} · ${formatDate(event.created_at)}`;
+        info.appendChild(meta);
+
+        const rozetler = document.createElement('span');
+        rozetler.className = 'event-rozetler';
+
+        if (event.pending_count > 0) {
+            const bekleyen = document.createElement('span');
+            bekleyen.className = 'tag event-rozet-bekleyen';
+            bekleyen.textContent = `${event.pending_count} bekliyor`;
+            rozetler.appendChild(bekleyen);
+        }
+
+        const onayli = document.createElement('span');
+        onayli.className = 'tag';
+        onayli.textContent = `${event.approved_count} onaylı`;
+        rozetler.appendChild(onayli);
+
+        info.appendChild(rozetler);
+        row.appendChild(info);
+
+        const actions = document.createElement('div');
+        actions.className = 'event-actions';
+
+        const reviewBtn = document.createElement('button');
+        reviewBtn.type = 'button';
+        reviewBtn.className = 'btn btn-kucuk';
+        reviewBtn.textContent = 'Bekleyenler';
+        reviewBtn.addEventListener('click', () => {
+            document.getElementById('reviewSlug').value = event.slug;
+            loadPending(event.slug);
+            document.getElementById('pendingGrid').scrollIntoView({ behavior: 'smooth' });
+        });
+        actions.appendChild(reviewBtn);
+
+        const galleryLink = document.createElement('a');
+        galleryLink.className = 'btn btn-kucuk';
+        galleryLink.href = `etkinlik.html?slug=${encodeURIComponent(event.slug)}`;
+        galleryLink.target = '_blank';
+        galleryLink.rel = 'noopener';
+        galleryLink.textContent = 'Galeriyi Aç';
+        actions.appendChild(galleryLink);
+
+        row.appendChild(actions);
+        list.appendChild(row);
+    });
+}
+
+async function loadEvents() {
+    const list = document.getElementById('eventList');
+    list.innerHTML = '<p class="bio">Yükleniyor...</p>';
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/admin/events`, {
+            headers: { Authorization: `Bearer ${getToken()}` },
+        });
+
+        if (response.status === 401) {
+            logout();
+            return;
+        }
+        if (!response.ok) {
+            list.innerHTML = '<p class="bio">Etkinlikler alınamadı.</p>';
+            return;
+        }
+
+        renderEvents(await response.json());
+    } catch (err) {
+        list.innerHTML = '<p class="bio">Sunucuya bağlanılamadı.</p>';
     }
 }
 
@@ -184,6 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('newEventName').value.trim();
         createEvent(slug, name);
     });
+
+    document.getElementById('loadEventsBtn').addEventListener('click', loadEvents);
 
     document.getElementById('loadPendingForm').addEventListener('submit', (event) => {
         event.preventDefault();
