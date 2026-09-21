@@ -1,4 +1,3 @@
-const API_BASE_URL = 'https://api-production-137f.up.railway.app';
 const TOKEN_KEY = 'admin_token';
 
 function getToken() {
