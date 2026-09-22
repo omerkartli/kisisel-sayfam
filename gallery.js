@@ -71,7 +71,7 @@ function kureyiDoldur(liste) {
         parca.setAttribute('aria-label', `${i + 1}. fotoğrafı büyüt`);
 
         const img = document.createElement('img');
-        img.src = photo.url;
+        img.src = photo.thumb_url || photo.url;
         img.alt = '';
         img.loading = i < 12 ? 'eager' : 'lazy';
         img.addEventListener('load', () => {
@@ -250,7 +250,7 @@ function agaciKur(liste) {
         parca.setAttribute('aria-label', `${i + 1}. fotoğrafı büyüt`);
 
         const img = document.createElement('img');
-        img.src = photo.url;
+        img.src = photo.thumb_url || photo.url;
         img.alt = '';
         img.loading = i < 12 ? 'eager' : 'lazy';
         img.addEventListener('load', () => parca.classList.add('is-yuklendi'));
@@ -279,7 +279,7 @@ function izgarayiDoldur(liste) {
         parca.setAttribute('aria-label', `${i + 1}. fotoğrafı büyüt`);
 
         const img = document.createElement('img');
-        img.src = photo.url;
+        img.src = photo.thumb_url || photo.url;
         img.alt = '';
         img.loading = 'lazy';
         img.addEventListener('load', () => parca.classList.add('is-yuklendi'));
@@ -507,15 +507,72 @@ function gorunumKur() {
     });
 }
 
-async function loadPhotos(slug) {
-    const durum = document.getElementById('galeriDurum');
+const SAYFA_BOYU = 60;
+let toplamFotograf = 0;
+let sayfaYukleniyor = false;
+
+async function sayfaGetir(slug, offset) {
+    const adres = `${API_BASE_URL}/events/${encodeURIComponent(slug)}/photos`
+        + `?limit=${SAYFA_BOYU}&offset=${offset}`;
+    const response = await fetch(adres);
+    if (!response.ok) throw new Error('liste alınamadı');
+
+    const toplam = Number(response.headers.get('X-Total-Count'));
+    return { liste: await response.json(), toplam: Number.isFinite(toplam) ? toplam : 0 };
+}
+
+function dahaFazlaGuncelle() {
+    const btn = document.getElementById('dahaFazla');
+    const kalan = toplamFotograf - fotograflar.length;
+    btn.hidden = kalan <= 0;
+    btn.textContent = sayfaYukleniyor
+        ? 'Yükleniyor...'
+        : `${Math.min(kalan, SAYFA_BOYU)} fotoğraf daha yükle`;
+    btn.disabled = sayfaYukleniyor;
+}
+
+function gorunumleriTazele() {
     const sayi = document.getElementById('galeriSayi');
+    sayi.textContent = toplamFotograf > fotograflar.length
+        ? `${fotograflar.length} / ${toplamFotograf} fotoğraf`
+        : `${fotograflar.length} fotoğraf`;
+
+    izgarayiDoldur(fotograflar);
+    if (!document.getElementById('agacAlan').hidden) {
+        agaciKur(fotograflar.slice(0, AGAC_SINIR));
+    }
+    if (kureAktif) {
+        kureyiDoldur(fotograflar.slice(0, KURE_SINIR));
+        if (kureCizdir) kureCizdir();
+    }
+    dahaFazlaGuncelle();
+}
+
+async function sonrakiSayfa(slug) {
+    if (sayfaYukleniyor || fotograflar.length >= toplamFotograf) return;
+
+    sayfaYukleniyor = true;
+    dahaFazlaGuncelle();
 
     try {
-        const response = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(slug)}/photos`);
-        if (!response.ok) return;
+        const { liste, toplam } = await sayfaGetir(slug, fotograflar.length);
+        toplamFotograf = toplam || toplamFotograf;
+        fotograflar = fotograflar.concat(liste);
+    } catch (err) {
+        document.getElementById('galeriDurum').textContent = 'Fotoğraflar yüklenemedi.';
+    } finally {
+        sayfaYukleniyor = false;
+        gorunumleriTazele();
+    }
+}
 
-        fotograflar = await response.json();
+async function loadPhotos(slug) {
+    const durum = document.getElementById('galeriDurum');
+
+    try {
+        const { liste, toplam } = await sayfaGetir(slug, 0);
+        fotograflar = liste;
+        toplamFotograf = toplam || liste.length;
 
         if (fotograflar.length === 0) {
             durum.textContent = 'Henüz onaylanmış fotoğraf yok. İlk fotoğrafı sen yükle.';
@@ -526,11 +583,10 @@ async function loadPhotos(slug) {
         }
 
         durum.textContent = '';
-        sayi.textContent = `${fotograflar.length} fotoğraf`;
 
         const ipucu = document.getElementById('galeriIpucu');
         document.getElementById('galeriIpucuMetin').textContent =
-            `${fotograflar.length} fotoğrafı gör`;
+            `${toplamFotograf} fotoğrafı gör`;
         ipucu.hidden = false;
         ipucu.addEventListener('click', (e) => {
             e.preventDefault();
@@ -539,10 +595,12 @@ async function loadPhotos(slug) {
                 block: 'start',
             });
         });
-        kureyiDoldur(fotograflar.slice(0, KURE_SINIR));
-        izgarayiDoldur(fotograflar);
+
         kureyiCalistir();
         gorunumSec('agac');
+        gorunumleriTazele();
+
+        document.getElementById('dahaFazla').addEventListener('click', () => sonrakiSayfa(slug));
     } catch (err) {
         durum.textContent = 'Fotoğraflar yüklenemedi.';
     }

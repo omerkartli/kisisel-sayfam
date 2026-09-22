@@ -988,6 +988,27 @@ body.sayfa-hero {
     box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
 }
 
+.sahne-alt {
+    display: flex;
+    justify-content: center;
+    padding-top: 18px;
+}
+
+.daha-fazla {
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.daha-fazla:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.daha-fazla[disabled] {
+    opacity: 0.6;
+    cursor: default;
+}
+
 .sahne-ipucu {
     text-align: center;
     font-size: 0.8rem;
