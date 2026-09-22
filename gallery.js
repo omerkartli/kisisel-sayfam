@@ -1,3 +1,23 @@
+const CIHAZ_ANAHTARI = 'cihaz_jetonu';
+
+function cihazJetonu() {
+    // Yükleme sınırı kişi başı işlesin diye tarayıcıda kalıcı bir jeton tutuyoruz.
+    // Silinebilir olduğu için güvenlik değil, nezaket sınırı: aynı Wi-Fi'daki
+    // davetliler birbirinin hakkını yemesin diye var.
+    try {
+        let jeton = localStorage.getItem(CIHAZ_ANAHTARI);
+        if (!jeton) {
+            jeton = (crypto.randomUUID?.() || String(Math.random()).slice(2))
+                .replace(/-/g, '')
+                .slice(0, 32);
+            localStorage.setItem(CIHAZ_ANAHTARI, jeton);
+        }
+        return jeton;
+    } catch (err) {
+        return null; // gizli sekmede depolama kapalı olabilir; sunucu IP'ye düşer
+    }
+}
+
 function getSlugFromUrl() {
     return new URLSearchParams(window.location.search).get('slug');
 }
@@ -624,8 +644,10 @@ async function handleUpload(event, slug) {
     message.textContent = 'Yükleniyor...';
 
     try {
+        const jeton = cihazJetonu();
         const response = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(slug)}/photos`, {
             method: 'POST',
+            headers: jeton ? { 'X-Cihaz': jeton } : {},
             body: formData,
         });
 
@@ -638,7 +660,7 @@ async function handleUpload(event, slug) {
         } else if (response.status === 413) {
             message.textContent = 'Dosya çok büyük (maksimum 15MB).';
         } else if (response.status === 429) {
-            message.textContent = 'Çok fazla yükleme yaptın, biraz sonra tekrar dene.';
+            message.textContent = 'Saatlik yükleme sınırına ulaştın (5 fotoğraf). Bir süre sonra tekrar dene.';
         } else {
             message.textContent = 'Bir şeyler ters gitti, tekrar dene.';
         }
