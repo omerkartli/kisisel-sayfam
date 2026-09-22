@@ -42,9 +42,15 @@ function kureYaricapHesapla(adet) {
 
 function kureyiDoldur(liste) {
     const kure = document.getElementById('kure');
+    const alan = document.getElementById('kureAlan');
     kure.innerHTML = '';
     kureYaricap = kureYaricapHesapla(liste.length);
     kureParcalari = [];
+
+    const dar = alan.clientWidth < 560;
+    const parcaBoy = Math.round(
+        Math.max(dar ? 52 : 72, Math.min(dar ? 88 : 132, (kureYaricap * 1.7) / Math.sqrt(Math.max(liste.length, 4)))),
+    );
 
     const altinAci = Math.PI * (3 - Math.sqrt(5));
 
@@ -57,6 +63,10 @@ function kureyiDoldur(liste) {
         const parca = document.createElement('button');
         parca.type = 'button';
         parca.className = 'kure-parca';
+        parca.style.width = `${parcaBoy}px`;
+        parca.style.height = `${parcaBoy}px`;
+        parca.style.margin = `${-parcaBoy / 2}px 0 0 ${-parcaBoy / 2}px`;
+        parca.style.borderRadius = `${Math.round(parcaBoy * 0.15)}px`;
         parca.style.opacity = '0';
         parca.setAttribute('aria-label', `${i + 1}. fotoğrafı büyüt`);
 
@@ -113,12 +123,16 @@ function agaciKur(liste) {
     svg.innerHTML = '';
     meyveler.innerHTML = '';
 
-    const parcaBoy = G < 560 ? 54 : 74;
+    const enKucuk = G < 560 ? 48 : 64;
+    const enBuyuk = G < 560 ? 88 : 132;
+    // Parça boyu, seçilen dal uçlarının arasındaki mesafeden hesaplanacak
+    let parcaBoy = enKucuk;
     const rnd = rastgele(97);
     const dallar = [];
     const uclar = [];
 
     // Fotoğraf sayısının en az iki katı uç üret: aralarından seyrek olanları seçeceğiz
+    // Fotoğraf sayısının iki katı uç: aralarından seyrek olanları seçeceğiz
     const derinlik = Math.min(6, Math.max(3, Math.ceil(Math.log2(Math.max(liste.length, 2))) + 1));
 
     function dal(x, y, aci, uzunluk, kalan) {
@@ -131,13 +145,13 @@ function agaciKur(liste) {
             return;
         }
 
-        const sapma = 0.46 + rnd() * 0.22;
+        const sapma = 0.54 + rnd() * 0.2;
         const kisalma = 0.74 + rnd() * 0.08;
         dal(x2, y2, aci - sapma, uzunluk * kisalma, kalan - 1);
         dal(x2, y2, aci + sapma, uzunluk * kisalma, kalan - 1);
     }
 
-    dal(0, 0, -Math.PI / 2, 100, derinlik);
+    dal(0, 0, -Math.PI / 2, 34, derinlik);
 
     // Ağacı alana sığdır: tüm noktaları kutuya oturt
     const tumX = dallar.flatMap((d) => [d.x1, d.x2]);
@@ -147,7 +161,7 @@ function agaciKur(liste) {
     const minY = Math.min(...tumY);
     const maxY = Math.max(...tumY);
 
-    const bosluk = parcaBoy * 0.75;
+    const bosluk = enBuyuk * 0.62;
     const olcek = Math.min(
         (G - bosluk * 2) / Math.max(1, maxX - minX),
         (Y - bosluk * 1.6) / Math.max(1, maxY - minY),
@@ -204,6 +218,21 @@ function agaciKur(liste) {
     // Fotoğraf sırası tepede yukarıdan aşağıya, soldan sağa okunsun
     secilen.sort((a, b) => a.y - b.y || a.x - b.x);
 
+    // Parça boyu: en yakın iki fotoğrafın arası kadar; böylece ne örtüşür ne boş kalır
+    if (secilen.length > 1) {
+        let enYakin = Infinity;
+        secilen.forEach((a, i) => {
+            secilen.forEach((b, j) => {
+                if (i >= j) return;
+                const d = Math.hypot(a.x - b.x, a.y - b.y);
+                if (d < enYakin) enYakin = d;
+            });
+        });
+        parcaBoy = Math.round(Math.max(enKucuk, Math.min(enBuyuk, enYakin * 0.92)));
+    } else {
+        parcaBoy = enBuyuk;
+    }
+
     liste.forEach((photo, i) => {
         const uc = secilen[i];
         if (!uc) return;
@@ -211,6 +240,10 @@ function agaciKur(liste) {
         const parca = document.createElement('button');
         parca.type = 'button';
         parca.className = 'agac-parca';
+        parca.style.width = `${parcaBoy}px`;
+        parca.style.height = `${parcaBoy}px`;
+        parca.style.margin = `${-parcaBoy / 2}px 0 0 ${-parcaBoy / 2}px`;
+        parca.style.borderRadius = `${Math.round(parcaBoy * 0.18)}px`;
         parca.style.left = `${uc.x.toFixed(1)}px`;
         parca.style.top = `${(uc.y + parcaBoy * 0.34).toFixed(1)}px`;
         parca.style.animationDelay = `${-(i % 7) * 0.8}s`;
