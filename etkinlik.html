@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <header class="site-bar">
@@ -19,29 +19,72 @@
         </nav>
     </header>
 
-    <main class="icerik">
-    <div class="card card-wide">
+    <section class="etkinlik-bas">
         <h1 id="eventTitle">Etkinlik</h1>
-        <p class="bio" id="eventStatus">Yükleniyor...</p>
+        <p class="etkinlik-durum" id="eventStatus">Yükleniyor...</p>
 
-        <form id="uploadForm" class="upload-form">
-            <input
-                type="file"
-                id="photoInput"
-                accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
-                required
-            >
-            <input type="text" id="uploaderName" placeholder="Adın (opsiyonel)">
-            <button type="submit" class="btn">Fotoğraf Yükle</button>
+        <form id="uploadForm" class="yukleme">
+            <label class="yukleme-alan" for="photoInput" id="dropZone">
+                <span class="yukleme-ikon" aria-hidden="true">+</span>
+                <span class="yukleme-metin" id="dosyaAdi">Fotoğraf seç veya buraya sürükle</span>
+                <input
+                    type="file"
+                    id="photoInput"
+                    accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                    required
+                >
+            </label>
+
+            <div class="yukleme-satir">
+                <input type="text" id="uploaderName" placeholder="Adın" autocomplete="name">
+                <button type="submit" class="pill pill-koyu">Yükle</button>
+            </div>
         </form>
-        <p id="uploadMessage" class="upload-message"></p>
+        <p id="uploadMessage" class="yukleme-mesaj"></p>
 
-        <div id="gallery" class="gallery-grid"></div>
-    </div>
+        <a href="#sahne" class="galeri-ipucu" id="galeriIpucu" hidden>
+            <span id="galeriIpucuMetin">Galeriye in</span>
+            <span class="galeri-ipucu-ok" aria-hidden="true">&darr;</span>
+        </a>
+    </section>
 
+    <main class="sahne" id="sahne">
+        <div class="sahne-ust">
+            <span class="sahne-sayi" id="galeriSayi"></span>
+            <div class="sahne-gorunum" role="group" aria-label="Görünüm">
+                <button type="button" class="gorunum-btn is-secili" id="agacBtn">Ağaç</button>
+                <button type="button" class="gorunum-btn" id="kureBtn">Küre</button>
+                <button type="button" class="gorunum-btn" id="izgaraBtn">Izgara</button>
+            </div>
+        </div>
+
+        <div class="agac-alan" id="agacAlan">
+            <svg class="agac-dallar" id="agacDallar" aria-hidden="true"></svg>
+            <div class="agac-meyveler" id="agacMeyveler"></div>
+        </div>
+
+        <div class="kure-alan" id="kureAlan" hidden>
+            <div class="kure" id="kure"></div>
+        </div>
+
+        <p class="sahne-ipucu" id="sahneIpucu">Döndürmek için sürükle &middot; Büyütmek için dokun</p>
+
+        <div class="izgara" id="izgara" hidden></div>
+        <p class="sahne-durum" id="galeriDurum"></p>
     </main>
 
+    <div class="lightbox" id="lightbox" hidden>
+        <button type="button" class="lb-kapat" id="lbKapat" aria-label="Kapat">&times;</button>
+        <button type="button" class="lb-ok lb-onceki" id="lbOnceki" aria-label="Önceki fotoğraf">&lsaquo;</button>
+        <figure class="lb-icerik">
+            <img id="lbGorsel" alt="Etkinlik fotoğrafı"
+                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+            <figcaption class="lb-sayac" id="lbSayac"></figcaption>
+        </figure>
+        <button type="button" class="lb-ok lb-sonraki" id="lbSonraki" aria-label="Sonraki fotoğraf">&rsaquo;</button>
+    </div>
+
     <script src="script.js?v=6"></script>
-    <script src="gallery.js?v=5"></script>
+    <script src="gallery.js?v=6"></script>
 </body>
 </html>
