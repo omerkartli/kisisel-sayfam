@@ -1,3 +1,10 @@
+// API adresi: yerelden açıldığında yerel backend, canlıda Railway.
+// admin.js ve gallery.js bunu kullanır; ikisi de script.js'ten sonra yüklenir.
+const YEREL_MI = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const API_BASE_URL = YEREL_MI
+    ? 'http://127.0.0.1:8000'
+    : 'https://api-production-137f.up.railway.app';
+
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.addEventListener('DOMContentLoaded', () => {
