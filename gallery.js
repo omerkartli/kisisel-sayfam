@@ -632,6 +632,11 @@ async function tekDosyaYukle(slug, dosya, ad, ozelMi) {
     if (ad) formData.append('uploader_name', ad);
     if (ozelMi) formData.append('is_private', 'true');
 
+    // Rıza sunucuda kayda geçiyor; sürüm, metin değişirse kimin neye onay
+    // verdiğini ayırt etmek için. Sürümün tek kaynağı diyaloğun kendisi.
+    formData.append('kvkk_onay', 'true');
+    formData.append('kvkk_surum', document.getElementById('kvkkKutu').dataset.surum || '');
+
     const jeton = cihazJetonu();
     const response = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(slug)}/photos`, {
         method: 'POST',
@@ -641,6 +646,7 @@ async function tekDosyaYukle(slug, dosya, ad, ozelMi) {
 
     if (response.status === 201) return { tamam: true };
     if (response.status === 429) return { tamam: false, durdur: true, sebep: 'sinir' };
+    if (response.status === 400) return { tamam: false, durdur: true, sebep: 'onay' };
     if (response.status === 415) return { tamam: false, sebep: 'tur' };
     if (response.status === 413) return { tamam: false, sebep: 'boyut' };
     return { tamam: false, sebep: 'bilinmiyor' };
@@ -667,7 +673,7 @@ async function handleUpload(event, slug) {
     const toplam = secilenDosyalar.length;
     const hatalar = [];
     let basarili = 0;
-    let sinirDoldu = false;
+    let sinirDoldu = null;
 
     for (const [sira, dosya] of secilenDosyalar.entries()) {
         message.textContent = toplam === 1
@@ -679,7 +685,7 @@ async function handleUpload(event, slug) {
             if (sonuc.tamam) {
                 basarili += 1;
             } else if (sonuc.durdur) {
-                sinirDoldu = true;
+                sinirDoldu = sonuc.sebep;
                 break;
             } else {
                 hatalar.push(dosya.name);
@@ -696,8 +702,11 @@ async function handleUpload(event, slug) {
             ? `${basarili} fotoğraf etkinlik sahiplerine iletildi, galeride görünmeyecek.`
             : `${basarili} fotoğraf yüklendi, onaylandıktan sonra galeride görünecek.`);
     }
-    if (sinirDoldu) {
+    if (sinirDoldu === 'sinir') {
         parcalar.push('Saatlik yükleme sınırına ulaşıldı (30 fotoğraf), kalanları birazdan gönderebilirsin.');
+    }
+    if (sinirDoldu === 'onay') {
+        parcalar.push('Sunucu onayı doğrulayamadı, sayfayı yenileyip tekrar dene.');
     }
     if (hatalar.length) {
         parcalar.push(`${hatalar.length} dosya gönderilemedi (desteklenmeyen tür ya da 15MB üstü).`);
