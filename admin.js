@@ -92,6 +92,74 @@ async function createEvent(slug, name) {
     }
 }
 
+/* --- QR kod --- */
+
+let qrAktifSlug = null;
+
+function qrGoster(event) {
+    const adres = eventUrl(event.slug);
+    const katman = document.getElementById('qrKatman');
+
+    qrAktifSlug = event.slug;
+    document.getElementById('qrBaslik').textContent = event.name;
+    document.getElementById('qrAdres').textContent = adres;
+
+    if (typeof QRious === 'undefined') {
+        document.getElementById('qrAdres').textContent =
+            'QR kütüphanesi yüklenemedi. Linki elle paylaşabilirsin: ' + adres;
+    } else {
+        // Yüksek hata düzeltme seviyesi: masada kırışan/lekelenen çıktı da okunur
+        new QRious({
+            element: document.getElementById('qrTuval'),
+            value: adres,
+            size: 1024, // masa kartına basılabilsin diye yüksek çözünürlük
+            level: 'H',
+            background: '#ffffff',
+            foreground: '#1f1c1a',
+            padding: 48,
+        });
+    }
+
+    katman.hidden = false;
+    document.body.classList.add('lb-acik');
+    document.getElementById('qrKapat').focus();
+}
+
+function qrKapat() {
+    document.getElementById('qrKatman').hidden = true;
+    document.body.classList.remove('lb-acik');
+}
+
+function qrKur() {
+    const katman = document.getElementById('qrKatman');
+
+    document.getElementById('qrKapat').addEventListener('click', qrKapat);
+    katman.addEventListener('click', (e) => {
+        if (e.target === katman) qrKapat();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (!katman.hidden && e.key === 'Escape') qrKapat();
+    });
+
+    document.getElementById('qrIndir').addEventListener('click', () => {
+        const baglanti = document.createElement('a');
+        baglanti.download = `${qrAktifSlug || 'etkinlik'}-qr.png`;
+        baglanti.href = document.getElementById('qrTuval').toDataURL('image/png');
+        baglanti.click();
+    });
+
+    document.getElementById('qrKopyala').addEventListener('click', async () => {
+        const btn = document.getElementById('qrKopyala');
+        try {
+            await navigator.clipboard.writeText(eventUrl(qrAktifSlug));
+            btn.textContent = 'Kopyalandı';
+        } catch (err) {
+            btn.textContent = 'Kopyalanamadı';
+        }
+        setTimeout(() => { btn.textContent = 'Linki kopyala'; }, 1800);
+    });
+}
+
 function formatDate(isoString) {
     const date = new Date(isoString);
     return Number.isNaN(date.getTime())
@@ -156,6 +224,13 @@ function renderEvents(events) {
             document.getElementById('pendingGrid').scrollIntoView({ behavior: 'smooth' });
         });
         actions.appendChild(reviewBtn);
+
+        const qrBtn = document.createElement('button');
+        qrBtn.type = 'button';
+        qrBtn.className = 'btn btn-kucuk';
+        qrBtn.textContent = 'QR';
+        qrBtn.addEventListener('click', () => qrGoster(event));
+        actions.appendChild(qrBtn);
 
         const galleryLink = document.createElement('a');
         galleryLink.className = 'btn btn-kucuk';
@@ -377,6 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createEvent(slug, name);
     });
 
+    qrKur();
     document.getElementById('loadEventsBtn').addEventListener('click', loadEvents);
 
     document.getElementById('loadPendingForm').addEventListener('submit', (event) => {
