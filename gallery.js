@@ -626,58 +626,97 @@ async function loadPhotos(slug) {
     }
 }
 
+async function tekDosyaYukle(slug, dosya, ad, ozelMi) {
+    const formData = new FormData();
+    formData.append('file', dosya);
+    if (ad) formData.append('uploader_name', ad);
+    if (ozelMi) formData.append('is_private', 'true');
+
+    const jeton = cihazJetonu();
+    const response = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(slug)}/photos`, {
+        method: 'POST',
+        headers: jeton ? { 'X-Cihaz': jeton } : {},
+        body: formData,
+    });
+
+    if (response.status === 201) return { tamam: true };
+    if (response.status === 429) return { tamam: false, durdur: true, sebep: 'sinir' };
+    if (response.status === 415) return { tamam: false, sebep: 'tur' };
+    if (response.status === 413) return { tamam: false, sebep: 'boyut' };
+    return { tamam: false, sebep: 'bilinmiyor' };
+}
+
 async function handleUpload(event, slug) {
     event.preventDefault();
 
     const nameInput = document.getElementById('uploaderName');
     const message = document.getElementById('uploadMessage');
 
-    if (!secilenDosya) {
+    if (!document.getElementById('kvkkOnay').checked) {
+        message.textContent = 'Yükleyebilmek için aydınlatma metnini onaylaman gerekiyor.';
+        return;
+    }
+
+    if (secilenDosyalar.length === 0) {
         message.textContent = 'Önce bir fotoğraf seç ya da çek.';
         return;
     }
 
-    const formData = new FormData();
-    formData.append('file', secilenDosya);
-    if (nameInput.value.trim()) {
-        formData.append('uploader_name', nameInput.value.trim());
-    }
-
+    const ad = nameInput.value.trim();
     const ozelMi = document.getElementById('ozelMi').checked;
-    if (ozelMi) {
-        formData.append('is_private', 'true');
+    const toplam = secilenDosyalar.length;
+    const hatalar = [];
+    let basarili = 0;
+    let sinirDoldu = false;
+
+    for (const [sira, dosya] of secilenDosyalar.entries()) {
+        message.textContent = toplam === 1
+            ? 'Yükleniyor...'
+            : `Yükleniyor... (${sira + 1}/${toplam})`;
+
+        try {
+            const sonuc = await tekDosyaYukle(slug, dosya, ad, ozelMi);
+            if (sonuc.tamam) {
+                basarili += 1;
+            } else if (sonuc.durdur) {
+                sinirDoldu = true;
+                break;
+            } else {
+                hatalar.push(dosya.name);
+            }
+        } catch (err) {
+            message.textContent = 'Sunucuya bağlanılamadı.';
+            return;
+        }
     }
 
-    message.textContent = 'Yükleniyor...';
+    const parcalar = [];
+    if (basarili > 0) {
+        parcalar.push(ozelMi
+            ? `${basarili} fotoğraf etkinlik sahiplerine iletildi, galeride görünmeyecek.`
+            : `${basarili} fotoğraf yüklendi, onaylandıktan sonra galeride görünecek.`);
+    }
+    if (sinirDoldu) {
+        parcalar.push('Saatlik yükleme sınırına ulaşıldı (30 fotoğraf), kalanları birazdan gönderebilirsin.');
+    }
+    if (hatalar.length) {
+        parcalar.push(`${hatalar.length} dosya gönderilemedi (desteklenmeyen tür ya da 15MB üstü).`);
+    }
+    message.textContent = parcalar.join(' ') || 'Bir şeyler ters gitti, tekrar dene.';
 
-    try {
-        const jeton = cihazJetonu();
-        const response = await fetch(`${API_BASE_URL}/events/${encodeURIComponent(slug)}/photos`, {
-            method: 'POST',
-            headers: jeton ? { 'X-Cihaz': jeton } : {},
-            body: formData,
-        });
-
-        if (response.status === 201) {
-            message.textContent = ozelMi
-                ? 'Teşekkürler! Bu fotoğraf galeride görünmeyecek, yalnızca etkinlik sahiplerine iletildi.'
-                : 'Teşekkürler! Fotoğrafın onaylandıktan sonra galeride görünecek.';
-            event.target.reset();
-        } else if (response.status === 415) {
-            message.textContent = 'Sadece resim dosyaları yüklenebilir.';
-        } else if (response.status === 413) {
-            message.textContent = 'Dosya çok büyük (maksimum 15MB).';
-        } else if (response.status === 429) {
-            message.textContent = 'Saatlik yükleme sınırına ulaştın (5 fotoğraf). Bir süre sonra tekrar dene.';
-        } else {
-            message.textContent = 'Bir şeyler ters gitti, tekrar dene.';
-        }
-    } catch (err) {
-        message.textContent = 'Sunucuya bağlanılamadı.';
+    if (basarili > 0) {
+        event.target.reset();
+        document.getElementById('kvkkOnay').checked = false;
+        secilenDosyalar = [];
+        if (typeof secimiSifirla === 'function') secimiSifirla();
     }
 }
 
-let secilenDosya = null;
+function dosyaOzeti(dosyalar) {
+    if (dosyalar.length === 0) return null;
+    if (dosyalar.length === 1) return dosyalar[0].name;
+    return `${dosyalar.length} fotoğraf seçildi`;
+}
 
 function yuklemeAlaniniKur() {
     const alan = document.getElementById('dropZone');
@@ -687,24 +726,26 @@ function yuklemeAlaniniKur() {
     const etiket = document.getElementById('dosyaAdi');
     const dokunmatik = window.matchMedia('(pointer: coarse)').matches;
 
+    const bosMetin = dokunmatik
+        ? 'Galeriden fotoğraf seç'
+        : 'Fotoğraf seç veya buraya sürükle';
+
     // Telefonda "sürükle" anlamsız; kamera düğmesi de yalnızca orada gerekli.
     // capture niteliği iOS'ta galeriyi tamamen kapattığı için ayrı bir giriş:
     // kullanıcı çekmek ile galeriden seçmek arasında seçim yapabilsin.
     if (dokunmatik) {
         kameraAlan.hidden = false;
-        etiket.textContent = 'Galeriden fotoğraf seç';
+        etiket.textContent = bosMetin;
     }
 
-    function dosyaSecildi(dosya) {
-        secilenDosya = dosya || null;
-        alan.classList.toggle('is-secili', Boolean(secilenDosya));
-        etiket.textContent = secilenDosya
-            ? secilenDosya.name
-            : (dokunmatik ? 'Galeriden fotoğraf seç' : 'Fotoğraf seç veya buraya sürükle');
+    function dosyalarSecildi(dosyalar) {
+        secilenDosyalar = Array.from(dosyalar || []);
+        alan.classList.toggle('is-secili', secilenDosyalar.length > 0);
+        etiket.textContent = dosyaOzeti(secilenDosyalar) || bosMetin;
     }
 
-    girdi.addEventListener('change', () => dosyaSecildi(girdi.files[0]));
-    kamera.addEventListener('change', () => dosyaSecildi(kamera.files[0]));
+    girdi.addEventListener('change', () => dosyalarSecildi(girdi.files));
+    kamera.addEventListener('change', () => dosyalarSecildi(kamera.files));
 
     ['dragenter', 'dragover'].forEach((tur) => {
         alan.addEventListener(tur, (e) => {
@@ -722,10 +763,19 @@ function yuklemeAlaniniKur() {
 
     alan.addEventListener('drop', (e) => {
         if (!e.dataTransfer.files.length) return;
-        dosyaSecildi(e.dataTransfer.files[0]);
+        dosyalarSecildi(e.dataTransfer.files);
     });
 
-    return () => dosyaSecildi(null);
+    return () => dosyalarSecildi([]);
+}
+
+function kvkkKur() {
+    const kutu = document.getElementById('kvkkKutu');
+    document.getElementById('kvkkAc').addEventListener('click', () => kutu.showModal());
+    document.getElementById('kvkkKapat').addEventListener('click', () => kutu.close());
+    kutu.addEventListener('click', (e) => {
+        if (e.target === kutu) kutu.close();
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -739,11 +789,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const dosyaSecildi = yuklemeAlaniniKur();
+    secimiSifirla = yuklemeAlaniniKur();
+    kvkkKur();
     lightboxKur();
     gorunumKur();
 
     loadEvent(slug);
     loadPhotos(slug);
-    form.addEventListener('submit', (event) => handleUpload(event, slug).then(dosyaSecildi));
+    form.addEventListener('submit', (event) => handleUpload(event, slug));
 });

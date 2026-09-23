@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=13">
+    <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
     <header class="site-bar">
@@ -31,6 +31,7 @@
                     type="file"
                     id="photoInput"
                     accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                    multiple
                 >
             </label>
 
@@ -43,6 +44,14 @@
             <div class="yukleme-satir">
                 <input type="text" id="uploaderName" placeholder="Adın" autocomplete="name">
                 <button type="submit" class="pill pill-koyu">Yükle</button>
+            </div>
+
+            <div class="ozel-secim kvkk-satir">
+                <label class="kvkk-etiket" for="kvkkOnay">
+                    <input type="checkbox" id="kvkkOnay">
+                    <span>Fotoğraflarımın paylaşılmasına izin veriyorum</span>
+                </label>
+                <button type="button" class="metin-link" id="kvkkAc">Aydınlatma metnini oku</button>
             </div>
 
             <label class="ozel-secim" for="ozelMi">
@@ -91,6 +100,72 @@
         <p class="sahne-durum" id="galeriDurum"></p>
     </main>
 
+    <dialog class="kvkk-kutu" id="kvkkKutu">
+        <article class="kvkk-icerik">
+            <h2>Kişisel Verilerin Korunması Aydınlatma Metni</h2>
+
+            <p>
+                Bu sayfa üzerinden yüklediğiniz fotoğraflar, 6698 sayılı Kişisel Verilerin
+                Korunması Kanunu (KVKK) kapsamında kişisel veri niteliği taşıyabilir.
+                Aşağıda bu verilerin kim tarafından, hangi amaçla ve nasıl işlendiği
+                açıklanmaktadır.
+            </p>
+
+            <h3>Veri sorumlusu</h3>
+            <p>Ömer Kartlı &mdash; <a href="mailto:omerkartli06@gmail.com">omerkartli06@gmail.com</a></p>
+
+            <h3>İşlenen veriler</h3>
+            <ul>
+                <li>Yüklediğiniz fotoğraf ve fotoğrafın teknik bilgileri (dosya türü, boyut, yüklenme zamanı)</li>
+                <li>İsteğe bağlı olarak yazdığınız ad</li>
+                <li>Kötüye kullanımı önlemek için IP adresi ve tarayıcınızda oluşturulan cihaz tanımlayıcısı</li>
+            </ul>
+
+            <h3>İşleme amacı ve hukuki sebep</h3>
+            <p>
+                Fotoğraflar yalnızca ilgili etkinliğin galerisinde gösterilmek, etkinlik
+                sahipleriyle paylaşılmak ve içerik denetimi yapılmak üzere işlenir.
+                İşlemenin hukuki sebebi <strong>açık rızanızdır</strong> (KVKK m.5/1).
+                Onay kutusunu işaretlemeden fotoğraf yükleyemezsiniz.
+            </p>
+
+            <h3>Paylaşım ve yurt dışına aktarım</h3>
+            <p>
+                Fotoğraflar Cloudflare R2 (Avrupa bölgesi) üzerinde saklanır, uygulama
+                sunucusu Railway altyapısında çalışır. Bu hizmet sağlayıcılar yurt dışında
+                bulunduğundan verileriniz <strong>yurt dışına aktarılmaktadır</strong>.
+                Fotoğraflar bu hizmet sağlayıcılar dışında üçüncü kişilerle paylaşılmaz,
+                reklam veya profilleme amacıyla kullanılmaz.
+            </p>
+            <p>
+                &ldquo;Sadece etkinlik sahipleri görsün&rdquo; seçeneğini işaretlerseniz
+                fotoğrafınız herkese açık galeride yayımlanmaz; yalnızca etkinlik
+                sahiplerine iletilir.
+            </p>
+
+            <h3>Saklama süresi</h3>
+            <p>
+                Fotoğraflar etkinlik sahibi silinmesini isteyene kadar saklanır. Etkinlik
+                silindiğinde fotoğraflar da kalıcı olarak silinir.
+            </p>
+
+            <h3>Haklarınız</h3>
+            <p>
+                KVKK m.11 uyarınca kişisel verilerinizin işlenip işlenmediğini öğrenme,
+                düzeltilmesini veya silinmesini isteme ve rızanızı geri alma haklarına
+                sahipsiniz. Talepleriniz için yukarıdaki e-posta adresine yazabilirsiniz;
+                fotoğrafınız talebiniz üzerine galeriden kaldırılır.
+            </p>
+
+            <p class="kvkk-not">
+                Bu metin genel bir bilgilendirmedir. Ticari bir hizmet olarak
+                sunulacaksa bir hukukçu tarafından gözden geçirilmesi önerilir.
+            </p>
+
+            <button type="button" class="pill pill-koyu" id="kvkkKapat">Kapat</button>
+        </article>
+    </dialog>
+
     <div class="lightbox" id="lightbox" hidden>
         <button type="button" class="lb-kapat" id="lbKapat" aria-label="Kapat">&times;</button>
         <button type="button" class="lb-ok lb-onceki" id="lbOnceki" aria-label="Önceki fotoğraf">&lsaquo;</button>
@@ -103,6 +178,6 @@
     </div>
 
     <script src="script.js?v=6"></script>
-    <script src="gallery.js?v=10"></script>
+    <script src="gallery.js?v=11"></script>
 </body>
 </html>
