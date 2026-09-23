@@ -75,3 +75,5 @@ değil, `setHeadingText()` kullan.**
   yok; sadece bekleyenler için onayla/reddet var.
 - Galerilerde sayfalama yok. Şimdilik sorun değil, bir etkinlikte yüzlerce
   fotoğraf birikirse gerekecek.
+
+- yükleme alanında sadece düğün sahipleri görsün checkbox ekleyip bu seçili ise herekesin görüntülediği ekranda değil de admin görüntülme ekranında görünsün o yükelene foto 
