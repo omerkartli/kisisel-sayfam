@@ -3,88 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Paneli - Dijital Çözümlerim</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=16">
+    <title>Taşındı &mdash; Dijital Çözümlerim</title>
+    <link rel="canonical" href="https://omerkartlimarmara.github.io/dijital-cozumlerim/admin.html">
+    <meta name="robots" content="noindex">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f4f1ec;
+            color: #3a3632;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            padding: 24px;
+        }
+        a { color: #1f1c1a; }
+    </style>
+    <script>
+        // Sorgu dizesi korunmalı: etkinlik bağlantıları ?slug=... taşıyor
+        location.replace('https://omerkartlimarmara.github.io/dijital-cozumlerim/admin.html' + window.location.search + window.location.hash);
+    </script>
 </head>
 <body>
-    <header class="site-bar">
-        <a href="urunler.html" class="marka">Dijital Çözümlerim</a>
-        <nav class="site-nav">
-            <a href="index.html" class="site-nav-link">Ömer Kartlı</a>
-            <a href="https://wa.me/905545520912?text=Merhaba%20dijital%20%C3%BCr%C3%BCnler%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum"
-               target="_blank" rel="noopener" class="pill pill-wa">WhatsApp</a>
-        </nav>
-    </header>
-
-    <main class="icerik">
-    <div class="card" id="loginCard">
-        <h1>Admin Girişi</h1>
-        <form id="loginForm" class="upload-form">
-            <input type="password" id="passwordInput" placeholder="Şifre" required>
-            <button type="submit" class="btn">Giriş Yap</button>
-        </form>
-        <p id="loginMessage" class="upload-message"></p>
-    </div>
-
-    <div class="card card-wide" id="panelCard" hidden>
-        <h1>Etkinlik Yönetimi</h1>
-
-        <section class="panel-bolum">
-            <div class="bolum-baslik">
-                <h2 class="skills-title">Etkinlikler</h2>
-                <button type="button" id="loadEventsBtn" class="btn btn-kucuk">Etkinlikleri Getir</button>
-            </div>
-            <div id="eventList" class="event-list"></div>
-        </section>
-
-        <section class="panel-bolum">
-            <h2 class="skills-title">Yeni Etkinlik</h2>
-            <form id="createEventForm" class="upload-form">
-                <input type="text" id="newEventSlug" placeholder="slug (örn: dugun-2026)" pattern="[a-z0-9-]+" required>
-                <input type="text" id="newEventName" placeholder="Etkinlik adı" required>
-                <button type="submit" class="btn">Etkinlik Oluştur</button>
-            </form>
-            <p id="createEventMessage" class="upload-message"></p>
-        </section>
-
-        <section class="panel-bolum">
-            <div class="bolum-baslik">
-                <h2 class="skills-title">Fotoğraflar</h2>
-                <div class="sahne-gorunum durum-secici" role="group" aria-label="Durum">
-                    <button type="button" class="gorunum-btn is-secili" id="bekleyenBtn">Bekleyenler</button>
-                    <button type="button" class="gorunum-btn" id="onayliBtn">Onaylananlar</button>
-                    <button type="button" class="gorunum-btn" id="ozelBtn">Özel</button>
-                </div>
-            </div>
-            <form id="loadPendingForm" class="upload-form">
-                <input type="text" id="reviewSlug" placeholder="Etkinlik slug'ı" required>
-                <button type="submit" class="btn">Getir</button>
-            </form>
-
-            <div id="pendingGrid" class="gallery-grid gallery-grid-admin"></div>
-        </section>
-    </div>
-
-    </main>
-
-    <div class="qr-katman" id="qrKatman" hidden>
-        <div class="qr-kutu">
-            <button type="button" class="qr-kapat" id="qrKapat" aria-label="Kapat">&times;</button>
-            <h2 class="qr-baslik" id="qrBaslik">Etkinlik</h2>
-            <canvas id="qrTuval" width="1024" height="1024" aria-label="Etkinlik QR kodu"></canvas>
-            <p class="qr-adres" id="qrAdres"></p>
-            <div class="qr-dugmeler">
-                <button type="button" class="btn btn-kucuk" id="qrIndir">PNG indir</button>
-                <button type="button" class="btn btn-kucuk" id="qrKopyala">Linki kopyala</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-    <script src="script.js?v=6"></script>
-    <script src="admin.js?v=13"></script>
+    <p>
+        Bu sayfa taşındı.<br>
+        <a href="https://omerkartlimarmara.github.io/dijital-cozumlerim/admin.html">Dijital Çözümlerim</a> adresine yönlendiriliyorsun.
+    </p>
 </body>
 </html>

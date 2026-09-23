@@ -3,167 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etkinlik Galerisi - Dijital Çözümlerim</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=16">
+    <title>Taşındı &mdash; Dijital Çözümlerim</title>
+    <link rel="canonical" href="https://omerkartlimarmara.github.io/dijital-cozumlerim/etkinlik.html">
+    <meta name="robots" content="noindex">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f4f1ec;
+            color: #3a3632;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            padding: 24px;
+        }
+        a { color: #1f1c1a; }
+    </style>
+    <script>
+        // Sorgu dizesi korunmalı: etkinlik bağlantıları ?slug=... taşıyor
+        location.replace('https://omerkartlimarmara.github.io/dijital-cozumlerim/etkinlik.html' + window.location.search + window.location.hash);
+    </script>
 </head>
 <body>
-    <header class="site-bar">
-        <a href="urunler.html" class="marka">Dijital Çözümlerim</a>
-        <nav class="site-nav">
-            <a href="index.html" class="site-nav-link">Ömer Kartlı</a>
-            <a href="https://wa.me/905545520912?text=Merhaba%20dijital%20%C3%BCr%C3%BCnler%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum"
-               target="_blank" rel="noopener" class="pill pill-wa">WhatsApp</a>
-        </nav>
-    </header>
-
-    <section class="etkinlik-bas">
-        <h1 id="eventTitle">Etkinlik</h1>
-        <p class="etkinlik-durum" id="eventStatus">Yükleniyor...</p>
-
-        <form id="uploadForm" class="yukleme">
-            <label class="yukleme-alan" for="photoInput" id="dropZone">
-                <span class="yukleme-ikon" aria-hidden="true">+</span>
-                <span class="yukleme-metin" id="dosyaAdi">Fotoğraf seç veya buraya sürükle</span>
-                <input
-                    type="file"
-                    id="photoInput"
-                    accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
-                    multiple
-                >
-            </label>
-
-            <label class="kamera-dugme" for="kameraInput" id="kameraAlan" hidden>
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="kamera-ikon"><path d="M9 3 7.5 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.5L15 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-                <span>Fotoğraf çek</span>
-                <input type="file" id="kameraInput" accept="image/*" capture="environment">
-            </label>
-
-            <label class="ozel-secim" for="ozelMi">
-                <input type="checkbox" id="ozelMi">
-                <span>
-                    Sadece etkinlik sahipleri görsün
-                    <small>Bu fotoğraf galeride herkese görünmez, yalnızca onlara iletilir.</small>
-                </span>
-            </label>
-
-            <div class="ozel-secim kvkk-satir">
-                <label class="kvkk-etiket" for="kvkkOnay">
-                    <input type="checkbox" id="kvkkOnay">
-                    <span>Fotoğraflarımın KVKK kapsamında işlenmesine izin veriyorum</span>
-                </label>
-                <button type="button" class="metin-link" id="kvkkAc">Aydınlatma metnini oku</button>
-            </div>
-
-            <div class="yukleme-satir">
-                <input type="text" id="uploaderName" placeholder="Adın" autocomplete="name">
-                <button type="submit" class="pill pill-koyu" id="yukleBtn" disabled>Yükle</button>
-            </div>
-        </form>
-        <p id="uploadMessage" class="yukleme-mesaj"></p>
-
-        <a href="#sahne" class="galeri-ipucu" id="galeriIpucu" hidden>
-            <span id="galeriIpucuMetin">Galeriye in</span>
-            <span class="galeri-ipucu-ok" aria-hidden="true">&darr;</span>
-        </a>
-    </section>
-
-    <main class="sahne" id="sahne">
-        <div class="sahne-ust">
-            <span class="sahne-sayi" id="galeriSayi"></span>
-            <div class="sahne-gorunum" role="group" aria-label="Görünüm">
-                <button type="button" class="gorunum-btn is-secili" id="agacBtn">Ağaç</button>
-                <button type="button" class="gorunum-btn" id="kureBtn">Küre</button>
-                <button type="button" class="gorunum-btn" id="izgaraBtn">Izgara</button>
-            </div>
-        </div>
-
-        <div class="agac-alan" id="agacAlan">
-            <svg class="agac-dallar" id="agacDallar" aria-hidden="true"></svg>
-            <div class="agac-meyveler" id="agacMeyveler"></div>
-        </div>
-
-        <div class="kure-alan" id="kureAlan" hidden>
-            <div class="kure" id="kure"></div>
-        </div>
-
-        <p class="sahne-ipucu" id="sahneIpucu">Döndürmek için sürükle &middot; Büyütmek için dokun</p>
-
-        <div class="izgara" id="izgara" hidden></div>
-
-        <div class="sahne-alt">
-            <button type="button" class="gorunum-btn daha-fazla" id="dahaFazla" hidden></button>
-        </div>
-
-        <p class="sahne-durum" id="galeriDurum"></p>
-    </main>
-
-    <dialog class="kvkk-kutu" id="kvkkKutu" data-surum="2026-09-23">
-        <article class="kvkk-icerik">
-            <h2>Kişisel Verilerin Korunması Aydınlatma Metni</h2>
-
-            <p>
-                Bu sayfa üzerinden yüklediğiniz fotoğraflar, 6698 sayılı Kişisel Verilerin
-                Korunması Kanunu (KVKK) kapsamında kişisel veri niteliği taşıyabilir.
-                Aşağıda bu verilerin kim tarafından, hangi amaçla ve nasıl işlendiği
-                açıklanmaktadır.
-            </p>
-
-            
-            <h3>İşlenen veriler</h3>
-            <ul>
-                <li>Yüklediğiniz fotoğraf ve fotoğrafın teknik bilgileri (dosya türü, boyut, yüklenme zamanı)</li>
-                <li>İsteğe bağlı olarak yazdığınız ad</li>
-                <li>Kötüye kullanımı önlemek için IP adresi ve tarayıcınızda oluşturulan cihaz tanımlayıcısı</li>
-            </ul>
-
-            <h3>İşleme amacı ve hukuki sebep</h3>
-            <p>
-                Fotoğraflar yalnızca ilgili etkinliğin galerisinde gösterilmek, etkinlik
-                sahipleriyle paylaşılmak ve içerik denetimi yapılmak üzere işlenir.
-                İşlemenin hukuki sebebi <strong>açık rızanızdır</strong> (KVKK m.5/1).
-                Onay kutusunu işaretlemeden fotoğraf yükleyemezsiniz.
-            </p>
-
-            <p>
-                &ldquo;Sadece etkinlik sahipleri görsün&rdquo; seçeneğini işaretlerseniz
-                fotoğrafınız herkese açık galeride yayımlanmaz; yalnızca etkinlik
-                sahiplerine iletilir.
-            </p>
-
-            <h3>Saklama süresi</h3>
-            <p>
-                Fotoğraflar etkinlik sahibi silinmesini isteyene kadar saklanır. Etkinlik
-                silindiğinde fotoğraflar da kalıcı olarak silinir.
-            </p>
-
-            <h3>Haklarınız</h3>
-            <p>
-                KVKK m.11 uyarınca kişisel verilerinizin işlenip işlenmediğini öğrenme,
-                düzeltilmesini veya silinmesini isteme ve rızanızı geri alma haklarına
-                sahipsiniz. Talepleriniz için etkinlik sahipleriyle iletişime geçebilirsiniz.
-                Etkinlik sahipleri, talebiniz üzerine fotoğraflarınızı galeriden kaldırır.
-            </p>
-
-
-            <button type="button" class="pill pill-koyu" id="kvkkKapat">Kapat</button>
-        </article>
-    </dialog>
-
-    <div class="lightbox" id="lightbox" hidden>
-        <button type="button" class="lb-kapat" id="lbKapat" aria-label="Kapat">&times;</button>
-        <button type="button" class="lb-ok lb-onceki" id="lbOnceki" aria-label="Önceki fotoğraf">&lsaquo;</button>
-        <figure class="lb-icerik">
-            <img id="lbGorsel" alt="Etkinlik fotoğrafı"
-                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-            <figcaption class="lb-sayac" id="lbSayac"></figcaption>
-        </figure>
-        <button type="button" class="lb-ok lb-sonraki" id="lbSonraki" aria-label="Sonraki fotoğraf">&rsaquo;</button>
-    </div>
-
-    <script src="script.js?v=6"></script>
-    <script src="gallery.js?v=13"></script>
+    <p>
+        Bu sayfa taşındı.<br>
+        <a href="https://omerkartlimarmara.github.io/dijital-cozumlerim/etkinlik.html">Dijital Çözümlerim</a> adresine yönlendiriliyorsun.
+    </p>
 </body>
 </html>

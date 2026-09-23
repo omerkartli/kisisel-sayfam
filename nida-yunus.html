@@ -3,120 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Gerçek kişilerin bilgileri: arama motorlarına açılmasın -->
-    <meta name="robots" content="noindex, nofollow">
-    <title>Nida &amp; Yunus Emre &mdash; Düğün Davetiyesi</title>
-    <link rel="stylesheet" href="davetiye.css?v=2">
+    <title>Taşındı &mdash; Dijital Çözümlerim</title>
+    <link rel="canonical" href="https://omerkartlimarmara.github.io/dijital-cozumlerim/nida-yunus.html">
+    <meta name="robots" content="noindex">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f4f1ec;
+            color: #3a3632;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            padding: 24px;
+        }
+        a { color: #1f1c1a; }
+    </style>
+    <script>
+        // Sorgu dizesi korunmalı: etkinlik bağlantıları ?slug=... taşıyor
+        location.replace('https://omerkartlimarmara.github.io/dijital-cozumlerim/nida-yunus.html' + window.location.search + window.location.hash);
+    </script>
 </head>
 <body>
-    <div class="scene" id="scene">
-        <button class="envelope" id="envelope" type="button" aria-label="Davetiyeyi aç">
-            <span class="env-body"></span>
-
-            <span class="letter-peek">
-                <span class="peek-mark">N &middot; Y</span>
-                <span class="peek-line"></span>
-                <span class="peek-line short"></span>
-            </span>
-
-            <span class="env-front"></span>
-            <span class="env-flap"></span>
-
-            <span class="monogram"><span>N</span><em>&amp;</em><span>Y</span></span>
-        </button>
-
-        <p class="hint" id="hint">Davetiyeyi açmak için dokun</p>
-    </div>
-
-    <main class="invite" id="invite" data-tarih="2026-09-26T13:00:00+03:00">
-        <span class="demo-badge">Davetiye</span>
-
-        <p class="invite-intro">
-            En mutlu günümüzde,<br>
-            sevenlerimizle bir arada olmak dileğiyle.
-        </p>
-
-        <h1 class="isimler">
-            Nida
-            <span class="ve">&amp;</span>
-            Yunus Emre
-        </h1>
-
-        <div class="ayrac" aria-hidden="true">&#10086;</div>
-
-        <div class="aileler">
-            <p class="aile">Yurdagül &amp; Hüseyin<br><strong>SÖNMEZ</strong></p>
-            <p class="aile">Nebahat &amp; Muharrem<br><strong>YILDIRIM</strong></p>
-        </div>
-
-        <div class="etkinlikler">
-            <section class="etkinlik-kart">
-                <h2 class="etkinlik-ad">Kına</h2>
-                <p class="etkinlik-tarih">
-                    <span class="ay">Eylül</span>
-                    <span class="gun-sayi">24</span>
-                    <span class="yil">2026</span>
-                </p>
-                <p class="etkinlik-saat">Perşembe &middot; 19.00 &ndash; 23.00</p>
-                <p class="etkinlik-not">Kına kadınlar arasında olacaktır.</p>
-            </section>
-
-            <section class="etkinlik-kart">
-                <h2 class="etkinlik-ad">Düğün</h2>
-                <p class="etkinlik-tarih">
-                    <span class="ay">Eylül</span>
-                    <span class="gun-sayi">26</span>
-                    <span class="yil">2026</span>
-                </p>
-                <p class="etkinlik-saat">Cumartesi &middot; 13.00 &ndash; 17.00</p>
-                <p class="etkinlik-not">
-                    Gelin alma için saat 12.00'de damat evinden hareket edilecektir.
-                </p>
-            </section>
-        </div>
-
-        <p class="mekan">
-            <strong>Yelken Düğün Salonu</strong>
-            Yavuz Sultan Mah. Rıhtım Cd. No: 57
-        </p>
-        <p class="adres">Derince / Kocaeli</p>
-
-        <a class="harita-link"
-           href="https://www.google.com/maps/search/?api=1&amp;query=Yelken+D%C3%BC%C4%9F%C3%BCn+Salonu+Derince+Kocaeli"
-           target="_blank" rel="noopener">Konumu Haritada Aç</a>
-
-        <div class="ayrac" aria-hidden="true">&#10086;</div>
-
-        <p class="gerisayim-baslik">Düğüne Kalan Süre</p>
-
-        <div class="gerisayim" id="gerisayim" role="timer" aria-live="off">
-            <div class="sayac-kutu">
-                <span class="sayac-deger" id="gun">--</span>
-                <span class="sayac-etiket">Gün</span>
-            </div>
-            <div class="sayac-kutu">
-                <span class="sayac-deger" id="saat">--</span>
-                <span class="sayac-etiket">Saat</span>
-            </div>
-            <div class="sayac-kutu">
-                <span class="sayac-deger" id="dakika">--</span>
-                <span class="sayac-etiket">Dakika</span>
-            </div>
-            <div class="sayac-kutu saniye">
-                <span class="sayac-deger" id="saniye">--</span>
-                <span class="sayac-etiket">Saniye</span>
-            </div>
-        </div>
-
-        <p class="gerisayim-not" id="gerisayimNot"></p>
-    </main>
-
-    <footer class="alt-bar">
-        <a class="alt-link" href="urunler.html" target="_blank" rel="noopener">Dijital Çözümlerim ile hazırlandı</a>
-        <a class="alt-link" href="#" id="tekrarIzle" hidden>Tekrar İzle</a>
-        
-    </footer>
-
-    <script src="davetiye.js?v=5"></script>
+    <p>
+        Bu sayfa taşındı.<br>
+        <a href="https://omerkartlimarmara.github.io/dijital-cozumlerim/nida-yunus.html">Dijital Çözümlerim</a> adresine yönlendiriliyorsun.
+    </p>
 </body>
 </html>
