@@ -92,6 +92,42 @@ async function createEvent(slug, name) {
     }
 }
 
+async function fotograflariIndir(event, btn) {
+    const eskiMetin = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Hazırlanıyor...';
+
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/admin/events/${encodeURIComponent(event.slug)}/zip-token`,
+            { method: 'POST', headers: { Authorization: `Bearer ${getToken()}` } },
+        );
+
+        if (response.status === 401) {
+            logout();
+            return;
+        }
+        if (!response.ok) {
+            btn.textContent = 'Alınamadı';
+            return;
+        }
+
+        const { token } = await response.json();
+        // İndirmeyi tarayıcıya bırakıyoruz: dosya diske akar, belleğe alınmaz.
+        window.location.href =
+            `${API_BASE_URL}/admin/events/${encodeURIComponent(event.slug)}`
+            + `/photos.zip?token=${encodeURIComponent(token)}`;
+        btn.textContent = 'İndiriliyor...';
+    } catch (err) {
+        btn.textContent = 'Alınamadı';
+    } finally {
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = eskiMetin;
+        }, 2500);
+    }
+}
+
 /* --- QR kod --- */
 
 let qrAktifSlug = null;
@@ -224,6 +260,15 @@ function renderEvents(events) {
             document.getElementById('pendingGrid').scrollIntoView({ behavior: 'smooth' });
         });
         actions.appendChild(reviewBtn);
+
+        if (event.approved_count > 0) {
+            const indirBtn = document.createElement('button');
+            indirBtn.type = 'button';
+            indirBtn.className = 'btn btn-kucuk';
+            indirBtn.textContent = `${event.approved_count} fotoğrafı indir`;
+            indirBtn.addEventListener('click', () => fotograflariIndir(event, indirBtn));
+            actions.appendChild(indirBtn);
+        }
 
         const qrBtn = document.createElement('button');
         qrBtn.type = 'button';
