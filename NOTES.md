@@ -8,19 +8,21 @@ sonra hatırlanması gereken şeyleri tutar. Koddan ya da git geçmişinden kola
 
 - **Frontend (bu repo)**: statik "link in bio" tarzı kişisel sayfa, build adımı
   yok — düz HTML/CSS/JS. GitHub Pages'e deploy oluyor.
-- **Backend** (`kisisel-sayfam-backend`, ayrı ve private repo): FastAPI.
-  Etkinlik başına fotoğraf yükleme + moderasyonlu galeri için var — davetliler
-  bir linkten fotoğraf yüklüyor, fotoğraflar onaylanmadan herkese görünmüyor.
-  Altyapı/hesap detayları o reponun `NOTES.md` dosyasında.
+- **Ürün tarafı bu repoda değil.** Davetiye, etkinlik galerisi ve yönetim
+  paneli 23 Eylül 2026'da [`dijital-cozumlerim`](https://github.com/omerkartlimarmara/dijital-cozumlerim)
+  reposuna taşındı. Burada yalnızca `urunler.html`, `etkinlik.html`,
+  `admin.html`, `davetiye.html` ve `nida-yunus.html` için **yönlendirme
+  sayfaları** duruyor; paylaşılmış bağlantılar ve üretilmiş QR'lar kırılmasın
+  diye. Sorgu dizesi (`?slug=...`) yönlendirmede korunuyor.
+- Backend (`kisisel-sayfam-backend`) da ayrı repo ve ürün tarafına hizmet
+  ediyor; bu sayfanın ona hiç ihtiyacı yok.
 
 ### Canlı adresler
 
 | Ne | Adres |
 |---|---|
-| Site | https://omerkartlimarmara.github.io/kisisel-sayfam/ |
-| Admin paneli | https://omerkartlimarmara.github.io/kisisel-sayfam/admin.html |
-| Etkinlik galerisi | `.../etkinlik.html?slug=SLUG` |
-| API | https://api-production-137f.up.railway.app |
+| Kişisel sayfa | https://omerkartlimarmara.github.io/kisisel-sayfam/ |
+| Dijital Çözümlerim (ayrı repo) | https://omerkartlimarmara.github.io/dijital-cozumlerim/ |
 
 ## Tekrar düşmemek gereken tuzaklar
 
@@ -67,51 +69,6 @@ değil, `setHeadingText()` kullan.**
 - Frontend PR'ı merge edildikten sonra **GitHub Pages deploy workflow'unun da
   başarılı olduğunu kontrol et** — merge tek başına "canlıya çıktı" demek değil.
 - Gerçek testler tarayıcıda (masaüstü + telefon) yapılıyor.
-
-## Etkinlik galerisi akışı
-
-Davetli QR'dan `etkinlik.html?slug=...` adresine gelir, fotoğraf yükler
-(galeriden seçer ya da telefonda kamerayla çeker), isterse **"sadece etkinlik
-sahipleri görsün"** işaretler. Onaylanan fotoğraflar galeride üç görünümde
-gezilir: **ağaç** (varsayılan), **küre**, **ızgara**.
-
-Bilmesi gerekenler:
-
-- Galeri **60'lık sayfalar** halinde yükleniyor; toplam sayı `X-Total-Count`
-  başlığından geliyor. Ağaç ilk 32, küre ilk 60 fotoğrafı gösteriyor
-  (bilinçli sınır: 500 parçalı dönen küre telefonda ağırlaşır), ızgara hepsini.
-- Parçalarda backend'in ürettiği **küçük kopya** kullanılıyor, büyütme
-  katmanı orijinali açıyor.
-- Küre **WebGL değil CSS 3B**. Fotoğraflar R2'den farklı origin'den geldiği
-  için WebGL dokusu bucket'ta CORS politikası ister; CSS tarafında böyle bir
-  kısıt yok.
-- `capture` niteliği **mevcut dosya girişine eklenmemeli**: iOS'ta galeriyi
-  tamamen kapatıyor. Kamera için ayrı bir giriş var.
-- Yükleme **çoklu seçim** destekliyor; dosyalar tek tek ve sırayla
-  gönderiliyor. Sınıra takılınca kalanlar iptal ediliyor ve kullanıcıya kaçının
-  gittiği söyleniyor.
-- Yükleme **KVKK onayına bağlı**: kutu işaretlenmeden istek atılmıyor,
-  sunucu da rızasız isteği 400 ile reddediyor. Rıza sunucuda zaman damgası ve
-  metin sürümüyle saklanıyor; metin değişirse diyalogdaki `data-surum`
-  güncellenmeli.
-  Aydınlatma metni `etkinlik.html` içinde gömülü, yurt dışına aktarımı
-  (Cloudflare R2 + Railway) açıkça söylüyor.
-- Ağaçta fotoğraf boyu, dal uçlarının arasındaki mesafeden hesaplanıyor.
-  Sabit boy verilirse ya üst üste biniyor ya da ağaç boş duruyor.
-
-## Davetiye sayfaları
-
-`davetiye.html` **vitrindeki demo**: isimler, aileler ve mekân kurgusaldır,
-`urunler.html`'den bağlantı verilir. Gerçek bir çiftin davetiyesi bu dosyaya
-yazılmaz.
-
-Gerçek davetiye **kendi dosyasını alır** (`nida-yunus.html` gibi): hiçbir
-sayfadan bağlantı verilmez, `<meta name="robots" content="noindex, nofollow">`
-taşır ve altbarında "Dijital Çözümlerim ile hazırlandı" künyesi bulunur.
-Gerçek kişilerin adı, tarihi ve adresi vitrine düşmesin diye.
-
-Geri sayım tarihi `#invite` üzerindeki `data-tarih` özniteliğinden okunur;
-iki sayfa da aynı `davetiye.js`'i paylaşır.
 
 ## Yapılmayanlar / sıradakiler
 
