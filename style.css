@@ -1577,3 +1577,14 @@ body.lb-acik {
     cursor: pointer;
     font-family: inherit;
 }
+
+.pill[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pill[disabled]:hover {
+    transform: none;
+    filter: none;
+}

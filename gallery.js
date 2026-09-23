@@ -716,6 +716,7 @@ async function handleUpload(event, slug) {
     if (basarili > 0) {
         event.target.reset();
         document.getElementById('kvkkOnay').checked = false;
+        document.getElementById('yukleBtn').disabled = true;
         secilenDosyalar = [];
         if (typeof secimiSifirla === 'function') secimiSifirla();
     }
@@ -780,6 +781,15 @@ function yuklemeAlaniniKur() {
 
 function kvkkKur() {
     const kutu = document.getElementById('kvkkKutu');
+    const onay = document.getElementById('kvkkOnay');
+    const yukleBtn = document.getElementById('yukleBtn');
+
+    // Düğme onay verilene kadar kapalı: kullanıcı neden yükleyemediğini
+    // denemeden görsün. Sunucudaki kontrol yine de yerinde duruyor.
+    const durumuTazele = () => { yukleBtn.disabled = !onay.checked; };
+    onay.addEventListener('change', durumuTazele);
+    durumuTazele();
+
     document.getElementById('kvkkAc').addEventListener('click', () => kutu.showModal());
     document.getElementById('kvkkKapat').addEventListener('click', () => kutu.close());
     kutu.addEventListener('click', (e) => {
