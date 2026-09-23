@@ -9,7 +9,7 @@ sonra hatırlanması gereken şeyleri tutar. Koddan ya da git geçmişinden kola
 - **Frontend (bu repo)**: statik "link in bio" tarzı kişisel sayfa, build adımı
   yok — düz HTML/CSS/JS. GitHub Pages'e deploy oluyor.
 - **Ürün tarafı bu repoda değil.** Davetiye, etkinlik galerisi ve yönetim
-  paneli 23 Eylül 2026'da [`dijital-cozumlerim`](https://github.com/omerkartlimarmara/dijital-cozumlerim)
+  paneli 23 Eylül 2026'da [`dijital-cozumlerim`](https://github.com/omerkartli/dijital-cozumlerim)
   reposuna taşındı. Burada yalnızca `urunler.html`, `etkinlik.html`,
   `admin.html`, `davetiye.html` ve `nida-yunus.html` için **yönlendirme
   sayfaları** duruyor; paylaşılmış bağlantılar ve üretilmiş QR'lar kırılmasın
@@ -21,8 +21,8 @@ sonra hatırlanması gereken şeyleri tutar. Koddan ya da git geçmişinden kola
 
 | Ne | Adres |
 |---|---|
-| Kişisel sayfa | https://omerkartlimarmara.github.io/kisisel-sayfam/ |
-| Dijital Çözümlerim (ayrı repo) | https://omerkartlimarmara.github.io/dijital-cozumlerim/ |
+| Kişisel sayfa | https://omerkartli.github.io/kisisel-sayfam/ |
+| Dijital Çözümlerim (ayrı repo) | https://omerkartli.github.io/dijital-cozumlerim/ |
 
 ## Tekrar düşmemek gereken tuzaklar
 
