@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
     <header class="site-bar">
@@ -39,6 +39,14 @@
                 <input type="text" id="uploaderName" placeholder="Adın" autocomplete="name">
                 <button type="submit" class="pill pill-koyu">Yükle</button>
             </div>
+
+            <label class="ozel-secim" for="ozelMi">
+                <input type="checkbox" id="ozelMi">
+                <span>
+                    Sadece etkinlik sahipleri görsün
+                    <small>Bu fotoğraf galeride herkese görünmez, yalnızca onlara iletilir.</small>
+                </span>
+            </label>
         </form>
         <p id="uploadMessage" class="yukleme-mesaj"></p>
 
@@ -90,6 +98,6 @@
     </div>
 
     <script src="script.js?v=6"></script>
-    <script src="gallery.js?v=8"></script>
+    <script src="gallery.js?v=9"></script>
 </body>
 </html>
