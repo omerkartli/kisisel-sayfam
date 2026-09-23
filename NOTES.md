@@ -87,6 +87,12 @@ Bilmesi gerekenler:
   kısıt yok.
 - `capture` niteliği **mevcut dosya girişine eklenmemeli**: iOS'ta galeriyi
   tamamen kapatıyor. Kamera için ayrı bir giriş var.
+- Yükleme **çoklu seçim** destekliyor; dosyalar tek tek ve sırayla
+  gönderiliyor. Sınıra takılınca kalanlar iptal ediliyor ve kullanıcıya kaçının
+  gittiği söyleniyor.
+- Yükleme **KVKK onayına bağlı**: kutu işaretlenmeden istek atılmıyor.
+  Aydınlatma metni `etkinlik.html` içinde gömülü, yurt dışına aktarımı
+  (Cloudflare R2 + Railway) açıkça söylüyor.
 - Ağaçta fotoğraf boyu, dal uçlarının arasındaki mesafeden hesaplanıyor.
   Sabit boy verilirse ya üst üste biniyor ya da ağaç boş duruyor.
 

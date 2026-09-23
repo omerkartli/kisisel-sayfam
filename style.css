@@ -1472,3 +1472,86 @@ body.lb-acik {
     background: var(--vurgu-soluk);
     color: var(--vurgu-koyu);
 }
+
+/* --- Aydınlatma metni --- */
+
+.metin-link {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: var(--vurgu-koyu);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.kvkk-kutu {
+    margin: auto;
+    border: 0;
+    border-radius: var(--radius);
+    padding: 0;
+    max-width: 620px;
+    width: calc(100% - 32px);
+    max-height: 82vh;
+    background: var(--kart);
+    color: var(--metin);
+    box-shadow: var(--golge);
+}
+
+.kvkk-kutu::backdrop {
+    background: rgba(20, 18, 17, 0.6);
+}
+
+.kvkk-icerik {
+    padding: 28px clamp(18px, 4vw, 32px) 24px;
+    overflow-y: auto;
+    max-height: 82vh;
+    text-align: left;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.kvkk-icerik h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.35rem;
+    color: var(--baslik);
+    margin-bottom: 14px;
+}
+
+.kvkk-icerik h3 {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--silik);
+    margin: 20px 0 6px;
+}
+
+.kvkk-icerik p,
+.kvkk-icerik ul {
+    margin-bottom: 10px;
+    color: var(--metin);
+}
+
+.kvkk-icerik ul {
+    padding-left: 18px;
+}
+
+.kvkk-icerik a {
+    color: var(--vurgu-koyu);
+}
+
+.kvkk-not {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--cizgi);
+    font-size: 0.84rem;
+    color: var(--soluk);
+}
+
+.kvkk-icerik .pill {
+    margin-top: 18px;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
