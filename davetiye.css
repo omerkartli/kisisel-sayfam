@@ -453,3 +453,97 @@ body {
         animation: none !important;
     }
 }
+
+/* ---------- Aileler ve etkinlikler ---------- */
+
+.aileler {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 48px;
+    margin-bottom: 26px;
+}
+
+.aile {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--soluk);
+}
+
+.aile strong {
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--murekkep);
+}
+
+.etkinlikler {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+    margin-bottom: 26px;
+}
+
+.etkinlik-kart {
+    flex: 1 1 210px;
+    max-width: 260px;
+    padding: 20px 16px;
+    border: 1px solid var(--cizgi);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.etkinlik-ad {
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--soluk);
+    margin-bottom: 10px;
+}
+
+.etkinlik-tarih {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    color: var(--murekkep);
+}
+
+.etkinlik-tarih .ay,
+.etkinlik-tarih .yil {
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--soluk);
+}
+
+.etkinlik-tarih .gun-sayi {
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--murekkep);
+}
+
+.etkinlik-saat {
+    font-size: 0.92rem;
+    color: var(--murekkep);
+    margin-bottom: 10px;
+}
+
+.etkinlik-not {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--soluk);
+}
+
+@media (max-width: 520px) {
+    .etkinlikler {
+        gap: 14px;
+    }
+
+    .etkinlik-kart {
+        flex-basis: 100%;
+        max-width: none;
+    }
+}
