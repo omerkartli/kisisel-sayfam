@@ -629,14 +629,16 @@ async function loadPhotos(slug) {
 async function handleUpload(event, slug) {
     event.preventDefault();
 
-    const fileInput = document.getElementById('photoInput');
     const nameInput = document.getElementById('uploaderName');
     const message = document.getElementById('uploadMessage');
 
-    if (!fileInput.files.length) return;
+    if (!secilenDosya) {
+        message.textContent = 'Önce bir fotoğraf seç ya da çek.';
+        return;
+    }
 
     const formData = new FormData();
-    formData.append('file', fileInput.files[0]);
+    formData.append('file', secilenDosya);
     if (nameInput.value.trim()) {
         formData.append('uploader_name', nameInput.value.trim());
     }
@@ -661,7 +663,6 @@ async function handleUpload(event, slug) {
                 ? 'Teşekkürler! Bu fotoğraf galeride görünmeyecek, yalnızca etkinlik sahiplerine iletildi.'
                 : 'Teşekkürler! Fotoğrafın onaylandıktan sonra galeride görünecek.';
             event.target.reset();
-            document.getElementById('dropZone').classList.remove('is-secili');
         } else if (response.status === 415) {
             message.textContent = 'Sadece resim dosyaları yüklenebilir.';
         } else if (response.status === 413) {
@@ -676,18 +677,34 @@ async function handleUpload(event, slug) {
     }
 }
 
+let secilenDosya = null;
+
 function yuklemeAlaniniKur() {
     const alan = document.getElementById('dropZone');
     const girdi = document.getElementById('photoInput');
+    const kamera = document.getElementById('kameraInput');
+    const kameraAlan = document.getElementById('kameraAlan');
     const etiket = document.getElementById('dosyaAdi');
+    const dokunmatik = window.matchMedia('(pointer: coarse)').matches;
 
-    function dosyaSecildi() {
-        const dosya = girdi.files[0];
-        alan.classList.toggle('is-secili', Boolean(dosya));
-        etiket.textContent = dosya ? dosya.name : 'Fotoğraf seç veya buraya sürükle';
+    // Telefonda "sürükle" anlamsız; kamera düğmesi de yalnızca orada gerekli.
+    // capture niteliği iOS'ta galeriyi tamamen kapattığı için ayrı bir giriş:
+    // kullanıcı çekmek ile galeriden seçmek arasında seçim yapabilsin.
+    if (dokunmatik) {
+        kameraAlan.hidden = false;
+        etiket.textContent = 'Galeriden fotoğraf seç';
     }
 
-    girdi.addEventListener('change', dosyaSecildi);
+    function dosyaSecildi(dosya) {
+        secilenDosya = dosya || null;
+        alan.classList.toggle('is-secili', Boolean(secilenDosya));
+        etiket.textContent = secilenDosya
+            ? secilenDosya.name
+            : (dokunmatik ? 'Galeriden fotoğraf seç' : 'Fotoğraf seç veya buraya sürükle');
+    }
+
+    girdi.addEventListener('change', () => dosyaSecildi(girdi.files[0]));
+    kamera.addEventListener('change', () => dosyaSecildi(kamera.files[0]));
 
     ['dragenter', 'dragover'].forEach((tur) => {
         alan.addEventListener(tur, (e) => {
@@ -705,11 +722,10 @@ function yuklemeAlaniniKur() {
 
     alan.addEventListener('drop', (e) => {
         if (!e.dataTransfer.files.length) return;
-        girdi.files = e.dataTransfer.files;
-        dosyaSecildi();
+        dosyaSecildi(e.dataTransfer.files[0]);
     });
 
-    return dosyaSecildi;
+    return () => dosyaSecildi(null);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

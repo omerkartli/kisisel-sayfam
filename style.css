@@ -379,6 +379,7 @@ a.product-card:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 10px;
 }
@@ -445,6 +446,7 @@ a.product-card:hover {
 
 .event-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
@@ -486,10 +488,38 @@ a.product-card:hover {
     pointer-events: none;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
     .event-row {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .event-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .event-actions .btn-kucuk {
+        width: 100%;
+        white-space: normal;
+    }
+
+    .bolum-baslik {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .durum-secici {
+        justify-content: space-between;
+    }
+
+    .durum-secici .gorunum-btn {
+        flex: 1;
+        padding: 8px 10px;
+    }
+
+    .gallery-grid-admin {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 
     .event-actions .btn-kucuk,
@@ -898,6 +928,7 @@ body.sayfa-hero {
 
 .sahne-gorunum {
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
     padding: 4px;
     border-radius: 999px;
@@ -1399,4 +1430,40 @@ body.lb-acik {
 
 .ozel-secim:has(input:checked) {
     border-color: var(--baslik);
+}
+
+/* --- Telefonda kamerayla çekme --- */
+
+.kamera-dugme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 18px;
+    border: 1px solid var(--baslik);
+    border-radius: 999px;
+    background: var(--kart);
+    color: var(--baslik);
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.kamera-dugme:active {
+    background: var(--baslik);
+    color: var(--kart);
+}
+
+.kamera-dugme input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.kamera-ikon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
