@@ -68,12 +68,34 @@ değil, `setHeadingText()` kullan.**
   başarılı olduğunu kontrol et** — merge tek başına "canlıya çıktı" demek değil.
 - Gerçek testler tarayıcıda (masaüstü + telefon) yapılıyor.
 
+## Etkinlik galerisi akışı
+
+Davetli QR'dan `etkinlik.html?slug=...` adresine gelir, fotoğraf yükler
+(galeriden seçer ya da telefonda kamerayla çeker), isterse **"sadece etkinlik
+sahipleri görsün"** işaretler. Onaylanan fotoğraflar galeride üç görünümde
+gezilir: **ağaç** (varsayılan), **küre**, **ızgara**.
+
+Bilmesi gerekenler:
+
+- Galeri **60'lık sayfalar** halinde yükleniyor; toplam sayı `X-Total-Count`
+  başlığından geliyor. Ağaç ilk 32, küre ilk 60 fotoğrafı gösteriyor
+  (bilinçli sınır: 500 parçalı dönen küre telefonda ağırlaşır), ızgara hepsini.
+- Parçalarda backend'in ürettiği **küçük kopya** kullanılıyor, büyütme
+  katmanı orijinali açıyor.
+- Küre **WebGL değil CSS 3B**. Fotoğraflar R2'den farklı origin'den geldiği
+  için WebGL dokusu bucket'ta CORS politikası ister; CSS tarafında böyle bir
+  kısıt yok.
+- `capture` niteliği **mevcut dosya girişine eklenmemeli**: iOS'ta galeriyi
+  tamamen kapatıyor. Kamera için ayrı bir giriş var.
+- Ağaçta fotoğraf boyu, dal uçlarının arasındaki mesafeden hesaplanıyor.
+  Sabit boy verilirse ya üst üste biniyor ya da ağaç boş duruyor.
+
 ## Yapılmayanlar / sıradakiler
 
-- Şu ana kadar gerçek bir etkinlik oluşturulmadı; tüm test verileri temizlendi.
-- Admin panelinde onaylanmış fotoğrafları **görme** veya onay sonrası **silme**
-  yok; sadece bekleyenler için onayla/reddet var.
-- Galerilerde sayfalama yok. Şimdilik sorun değil, bir etkinlikte yüzlerce
-  fotoğraf birikirse gerekecek.
-
-- yükleme alanında sadece düğün sahipleri görsün checkbox ekleyip bu seçili ise herekesin görüntülediği ekranda değil de admin görüntülme ekranında görünsün o yükelene foto 
+- Etkinlik sahibine e-posta/bildirim yok; onay bekleyen fotoğrafı görmek için
+  panele bakmak gerekiyor.
+- Yükleme sınırı cihaz jetonuna bağlı (kişi başı 5/saat) — jeton silinebilir,
+  yani nezaket sınırı. Gerçek kontrol isteniyorsa kişiye özel davet linki
+  gerekir.
+- Galeride fotoğrafı yükleyenin adı gösterilmiyor; ad yalnızca panelde
+  görünüyor.
