@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
     <header class="site-bar">
@@ -51,10 +51,16 @@
         </section>
 
         <section class="panel-bolum">
-            <h2 class="skills-title">Onay Bekleyen Fotoğraflar</h2>
+            <div class="bolum-baslik">
+                <h2 class="skills-title">Fotoğraflar</h2>
+                <div class="sahne-gorunum durum-secici" role="group" aria-label="Durum">
+                    <button type="button" class="gorunum-btn is-secili" id="bekleyenBtn">Bekleyenler</button>
+                    <button type="button" class="gorunum-btn" id="onayliBtn">Onaylananlar</button>
+                </div>
+            </div>
             <form id="loadPendingForm" class="upload-form">
-                <input type="text" id="reviewSlug" placeholder="Onay için slug gir" required>
-                <button type="submit" class="btn">Bekleyenleri Getir</button>
+                <input type="text" id="reviewSlug" placeholder="Etkinlik slug'ı" required>
+                <button type="submit" class="btn">Getir</button>
             </form>
 
             <div id="pendingGrid" class="gallery-grid gallery-grid-admin"></div>
@@ -78,6 +84,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <script src="script.js?v=6"></script>
-    <script src="admin.js?v=8"></script>
+    <script src="admin.js?v=9"></script>
 </body>
 </html>

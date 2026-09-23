@@ -342,12 +342,51 @@ async function loadEvents() {
     }
 }
 
+let aktifDurum = 'pending';
+
+function fotografSilOnayi(photo, slug, item, actions) {
+    const onay = document.createElement('div');
+    onay.className = 'foto-onay';
+
+    const evet = document.createElement('button');
+    evet.type = 'button';
+    evet.className = 'btn btn-kucuk btn-tehlike';
+    evet.textContent = 'Kalıcı sil';
+    evet.addEventListener('click', async () => {
+        item.classList.add('is-siliniyor');
+        const silindi = await fotografSil(photo.id);
+        if (silindi) {
+            loadPending(slug);
+        } else {
+            item.classList.remove('is-siliniyor');
+            onay.hidden = true;
+            actions.hidden = false;
+        }
+    });
+
+    const vazgec = document.createElement('button');
+    vazgec.type = 'button';
+    vazgec.className = 'btn btn-kucuk';
+    vazgec.textContent = 'Vazgeç';
+    vazgec.addEventListener('click', () => {
+        onay.hidden = true;
+        actions.hidden = false;
+    });
+
+    onay.appendChild(evet);
+    onay.appendChild(vazgec);
+    onay.hidden = true;
+    return onay;
+}
+
 function renderPending(photos, slug) {
     const grid = document.getElementById('pendingGrid');
     grid.innerHTML = '';
 
     if (photos.length === 0) {
-        grid.innerHTML = '<p class="bio">Onay bekleyen fotoğraf yok.</p>';
+        grid.innerHTML = aktifDurum === 'pending'
+            ? '<p class="bio">Onay bekleyen fotoğraf yok.</p>'
+            : '<p class="bio">Onaylanmış fotoğraf yok.</p>';
         return;
     }
 
@@ -356,9 +395,10 @@ function renderPending(photos, slug) {
         item.className = 'gallery-admin-item';
 
         const img = document.createElement('img');
-        img.src = photo.url;
-        img.alt = 'Onay bekleyen fotoğraf';
+        img.src = photo.thumb_url || photo.url;
+        img.alt = aktifDurum === 'pending' ? 'Onay bekleyen fotoğraf' : 'Onaylanmış fotoğraf';
         img.className = 'gallery-item';
+        img.loading = 'lazy';
         item.appendChild(img);
 
         if (photo.uploader_name) {
@@ -371,24 +411,57 @@ function renderPending(photos, slug) {
         const actions = document.createElement('div');
         actions.className = 'gallery-admin-actions';
 
-        const approveBtn = document.createElement('button');
-        approveBtn.type = 'button';
-        approveBtn.textContent = 'Onayla';
-        approveBtn.className = 'btn';
-        approveBtn.addEventListener('click', () => reviewPhoto(photo.id, 'approve', slug));
+        if (aktifDurum === 'pending') {
+            const approveBtn = document.createElement('button');
+            approveBtn.type = 'button';
+            approveBtn.textContent = 'Onayla';
+            approveBtn.className = 'btn';
+            approveBtn.addEventListener('click', () => reviewPhoto(photo.id, 'approve', slug));
 
-        const rejectBtn = document.createElement('button');
-        rejectBtn.type = 'button';
-        rejectBtn.textContent = 'Reddet';
-        rejectBtn.className = 'btn';
-        rejectBtn.addEventListener('click', () => reviewPhoto(photo.id, 'reject', slug));
+            const rejectBtn = document.createElement('button');
+            rejectBtn.type = 'button';
+            rejectBtn.textContent = 'Reddet';
+            rejectBtn.className = 'btn';
+            rejectBtn.addEventListener('click', () => reviewPhoto(photo.id, 'reject', slug));
 
-        actions.appendChild(approveBtn);
-        actions.appendChild(rejectBtn);
-        item.appendChild(actions);
+            actions.appendChild(approveBtn);
+            actions.appendChild(rejectBtn);
+            item.appendChild(actions);
+        } else {
+            const silBtn = document.createElement('button');
+            silBtn.type = 'button';
+            silBtn.textContent = 'Sil';
+            silBtn.className = 'btn btn-tehlike';
+            actions.appendChild(silBtn);
+            item.appendChild(actions);
+
+            const onay = fotografSilOnayi(photo, slug, item, actions);
+            silBtn.addEventListener('click', () => {
+                actions.hidden = true;
+                onay.hidden = false;
+            });
+            item.appendChild(onay);
+        }
 
         grid.appendChild(item);
     });
+}
+
+async function fotografSil(photoId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/admin/photos/${photoId}`, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${getToken()}` },
+        });
+
+        if (response.status === 401) {
+            logout();
+            return false;
+        }
+        return response.status === 204 || response.status === 404;
+    } catch (err) {
+        return false;
+    }
 }
 
 async function loadPending(slug) {
@@ -397,7 +470,7 @@ async function loadPending(slug) {
 
     try {
         const response = await fetch(
-            `${API_BASE_URL}/admin/events/${encodeURIComponent(slug)}/photos?status=pending`,
+            `${API_BASE_URL}/admin/events/${encodeURIComponent(slug)}/photos?status=${aktifDurum}`,
             { headers: { Authorization: `Bearer ${getToken()}` } },
         );
 
@@ -435,6 +508,23 @@ async function reviewPhoto(photoId, action, slug) {
     }
 }
 
+function durumSeciciKur() {
+    const dugmeler = {
+        pending: document.getElementById('bekleyenBtn'),
+        approved: document.getElementById('onayliBtn'),
+    };
+
+    Object.entries(dugmeler).forEach(([durum, el]) => {
+        el.addEventListener('click', () => {
+            aktifDurum = durum;
+            Object.entries(dugmeler).forEach(([k, d]) => d.classList.toggle('is-secili', k === durum));
+
+            const slug = document.getElementById('reviewSlug').value.trim();
+            if (slug) loadPending(slug);
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     if (getToken()) {
         showPanel();
@@ -453,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     qrKur();
+    durumSeciciKur();
     document.getElementById('loadEventsBtn').addEventListener('click', loadEvents);
 
     document.getElementById('loadPendingForm').addEventListener('submit', (event) => {

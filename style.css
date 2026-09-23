@@ -1330,3 +1330,38 @@ body.lb-acik {
     background: var(--yumusak);
     color: var(--baslik);
 }
+
+/* --- Admin: onaylı fotoğrafı silme --- */
+
+.durum-secici {
+    background: var(--yumusak);
+}
+
+.durum-secici .gorunum-btn {
+    color: var(--soluk);
+}
+
+.durum-secici .gorunum-btn.is-secili {
+    background: var(--baslik);
+    color: var(--kart);
+}
+
+.foto-onay {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.foto-onay .btn {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.85rem;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.gallery-admin-item.is-siliniyor {
+    opacity: 0.45;
+    pointer-events: none;
+}
