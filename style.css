@@ -1258,3 +1258,75 @@ body.lb-acik {
         animation: none;
     }
 }
+
+/* --- QR katmanı --- */
+
+.qr-katman {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 18, 17, 0.72);
+    padding: 20px;
+}
+
+.qr-kutu {
+    position: relative;
+    background: var(--kart);
+    border-radius: var(--radius);
+    box-shadow: var(--golge);
+    padding: 28px 24px 24px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+}
+
+.qr-baslik {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--baslik);
+    margin-bottom: 14px;
+}
+
+.qr-kutu canvas {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: var(--radius-sm);
+}
+
+.qr-adres {
+    font-size: 0.78rem;
+    color: var(--soluk);
+    word-break: break-all;
+    margin: 12px 0 16px;
+}
+
+.qr-dugmeler {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.qr-kapat {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: none;
+    color: var(--soluk);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 999px;
+}
+
+.qr-kapat:hover {
+    background: var(--yumusak);
+    color: var(--baslik);
+}

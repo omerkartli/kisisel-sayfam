@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
     <header class="site-bar">
@@ -63,7 +63,21 @@
 
     </main>
 
+    <div class="qr-katman" id="qrKatman" hidden>
+        <div class="qr-kutu">
+            <button type="button" class="qr-kapat" id="qrKapat" aria-label="Kapat">&times;</button>
+            <h2 class="qr-baslik" id="qrBaslik">Etkinlik</h2>
+            <canvas id="qrTuval" width="1024" height="1024" aria-label="Etkinlik QR kodu"></canvas>
+            <p class="qr-adres" id="qrAdres"></p>
+            <div class="qr-dugmeler">
+                <button type="button" class="btn btn-kucuk" id="qrIndir">PNG indir</button>
+                <button type="button" class="btn btn-kucuk" id="qrKopyala">Linki kopyala</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <script src="script.js?v=6"></script>
-    <script src="admin.js?v=7"></script>
+    <script src="admin.js?v=8"></script>
 </body>
 </html>
