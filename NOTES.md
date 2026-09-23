@@ -90,7 +90,10 @@ Bilmesi gerekenler:
 - Yükleme **çoklu seçim** destekliyor; dosyalar tek tek ve sırayla
   gönderiliyor. Sınıra takılınca kalanlar iptal ediliyor ve kullanıcıya kaçının
   gittiği söyleniyor.
-- Yükleme **KVKK onayına bağlı**: kutu işaretlenmeden istek atılmıyor.
+- Yükleme **KVKK onayına bağlı**: kutu işaretlenmeden istek atılmıyor,
+  sunucu da rızasız isteği 400 ile reddediyor. Rıza sunucuda zaman damgası ve
+  metin sürümüyle saklanıyor; metin değişirse diyalogdaki `data-surum`
+  güncellenmeli.
   Aydınlatma metni `etkinlik.html` içinde gömülü, yurt dışına aktarımı
   (Cloudflare R2 + Railway) açıkça söylüyor.
 - Ağaçta fotoğraf boyu, dal uçlarının arasındaki mesafeden hesaplanıyor.
