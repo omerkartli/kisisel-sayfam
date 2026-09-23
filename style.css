@@ -1467,3 +1467,8 @@ body.lb-acik {
     height: 20px;
     flex-shrink: 0;
 }
+
+.event-rozet-ozel {
+    background: var(--vurgu-soluk);
+    color: var(--vurgu-koyu);
+}

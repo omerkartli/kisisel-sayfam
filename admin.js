@@ -244,6 +244,13 @@ function renderEvents(events) {
         onayli.textContent = `${event.approved_count} onaylı`;
         rozetler.appendChild(onayli);
 
+        if (event.private_count > 0) {
+            const ozel = document.createElement('span');
+            ozel.className = 'tag event-rozet-ozel';
+            ozel.textContent = `${event.private_count} özel`;
+            rozetler.appendChild(ozel);
+        }
+
         info.appendChild(rozetler);
         row.appendChild(info);
 
@@ -261,11 +268,12 @@ function renderEvents(events) {
         });
         actions.appendChild(reviewBtn);
 
-        if (event.approved_count > 0) {
+        const indirilebilir = event.approved_count + (event.private_count || 0);
+        if (indirilebilir > 0) {
             const indirBtn = document.createElement('button');
             indirBtn.type = 'button';
             indirBtn.className = 'btn btn-kucuk';
-            indirBtn.textContent = `${event.approved_count} fotoğrafı indir`;
+            indirBtn.textContent = `${indirilebilir} fotoğrafı indir`;
             indirBtn.addEventListener('click', () => fotograflariIndir(event, indirBtn));
             actions.appendChild(indirBtn);
         }
