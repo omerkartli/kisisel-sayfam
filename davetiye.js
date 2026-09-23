@@ -1,6 +1,9 @@
 // Örnek davetiye: zarf açılış animasyonu + canlı geri sayım
 // Demo tarihi — gerçek kullanımda buradan değiştirilir.
-const DUGUN_TARIHI = new Date('2027-06-12T16:00:00+03:00');
+// Tarih sayfadan okunuyor: demo ve gerçek davetiyeler aynı script'i paylaşıyor
+const DUGUN_TARIHI = new Date(
+    document.getElementById('invite')?.dataset.tarih || '2027-06-12T16:00:00+03:00',
+);
 
 const azHareket = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

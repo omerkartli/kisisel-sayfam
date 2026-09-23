@@ -99,6 +99,20 @@ Bilmesi gerekenler:
 - Ağaçta fotoğraf boyu, dal uçlarının arasındaki mesafeden hesaplanıyor.
   Sabit boy verilirse ya üst üste biniyor ya da ağaç boş duruyor.
 
+## Davetiye sayfaları
+
+`davetiye.html` **vitrindeki demo**: isimler, aileler ve mekân kurgusaldır,
+`urunler.html`'den bağlantı verilir. Gerçek bir çiftin davetiyesi bu dosyaya
+yazılmaz.
+
+Gerçek davetiye **kendi dosyasını alır** (`nida-yunus.html` gibi): hiçbir
+sayfadan bağlantı verilmez, `<meta name="robots" content="noindex, nofollow">`
+taşır ve altbarında "Dijital Çözümlerim ile hazırlandı" künyesi bulunur.
+Gerçek kişilerin adı, tarihi ve adresi vitrine düşmesin diye.
+
+Geri sayım tarihi `#invite` üzerindeki `data-tarih` özniteliğinden okunur;
+iki sayfa da aynı `davetiye.js`'i paylaşır.
+
 ## Yapılmayanlar / sıradakiler
 
 - Etkinlik sahibine e-posta/bildirim yok; onay bekleyen fotoğrafı görmek için
