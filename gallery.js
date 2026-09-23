@@ -641,6 +641,11 @@ async function handleUpload(event, slug) {
         formData.append('uploader_name', nameInput.value.trim());
     }
 
+    const ozelMi = document.getElementById('ozelMi').checked;
+    if (ozelMi) {
+        formData.append('is_private', 'true');
+    }
+
     message.textContent = 'Yükleniyor...';
 
     try {
@@ -652,7 +657,9 @@ async function handleUpload(event, slug) {
         });
 
         if (response.status === 201) {
-            message.textContent = 'Teşekkürler! Fotoğrafın onaylandıktan sonra galeride görünecek.';
+            message.textContent = ozelMi
+                ? 'Teşekkürler! Bu fotoğraf galeride görünmeyecek, yalnızca etkinlik sahiplerine iletildi.'
+                : 'Teşekkürler! Fotoğrafın onaylandıktan sonra galeride görünecek.';
             event.target.reset();
             document.getElementById('dropZone').classList.remove('is-secili');
         } else if (response.status === 415) {

@@ -429,9 +429,12 @@ function renderPending(photos, slug) {
     grid.innerHTML = '';
 
     if (photos.length === 0) {
-        grid.innerHTML = aktifDurum === 'pending'
-            ? '<p class="bio">Onay bekleyen fotoğraf yok.</p>'
-            : '<p class="bio">Onaylanmış fotoğraf yok.</p>';
+        const bosMesaj = {
+            pending: 'Onay bekleyen fotoğraf yok.',
+            approved: 'Onaylanmış fotoğraf yok.',
+            private: 'Sadece size gönderilmiş fotoğraf yok.',
+        };
+        grid.innerHTML = `<p class="bio">${bosMesaj[aktifDurum]}</p>`;
         return;
     }
 
@@ -441,7 +444,7 @@ function renderPending(photos, slug) {
 
         const img = document.createElement('img');
         img.src = photo.thumb_url || photo.url;
-        img.alt = aktifDurum === 'pending' ? 'Onay bekleyen fotoğraf' : 'Onaylanmış fotoğraf';
+        img.alt = 'Etkinlik fotoğrafı';
         img.className = 'gallery-item';
         img.loading = 'lazy';
         item.appendChild(img);
@@ -557,6 +560,7 @@ function durumSeciciKur() {
     const dugmeler = {
         pending: document.getElementById('bekleyenBtn'),
         approved: document.getElementById('onayliBtn'),
+        private: document.getElementById('ozelBtn'),
     };
 
     Object.entries(dugmeler).forEach(([durum, el]) => {

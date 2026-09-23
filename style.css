@@ -1365,3 +1365,38 @@ body.lb-acik {
     opacity: 0.45;
     pointer-events: none;
 }
+
+/* --- Yüklemede "sadece sahipleri görsün" seçimi --- */
+
+.ozel-secim {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 1px solid var(--cizgi);
+    border-radius: var(--radius-sm);
+    background: var(--kart);
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--metin);
+    cursor: pointer;
+}
+
+.ozel-secim input {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    accent-color: var(--baslik);
+    flex-shrink: 0;
+}
+
+.ozel-secim small {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.8rem;
+    color: var(--soluk);
+}
+
+.ozel-secim:has(input:checked) {
+    border-color: var(--baslik);
+}
