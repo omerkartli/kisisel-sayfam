@@ -1475,6 +1475,24 @@ body.lb-acik {
 
 /* --- Aydınlatma metni --- */
 
+.kvkk-satir {
+    display: block;
+    cursor: default;
+}
+
+.kvkk-etiket {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.kvkk-satir .metin-link {
+    margin-left: 28px;
+    margin-top: 2px;
+    font-size: 0.8rem;
+}
+
 .metin-link {
     border: 0;
     background: none;
