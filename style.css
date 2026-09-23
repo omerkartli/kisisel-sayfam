@@ -52,6 +52,10 @@ body {
     padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 64px);
 }
 
+.marka-aktif {
+    border-bottom: 1px solid var(--baslik);
+}
+
 .site-nav-link.is-aktif {
     border-bottom-color: var(--baslik);
 }
