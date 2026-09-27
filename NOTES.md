@@ -11,9 +11,11 @@ sonra hatırlanması gereken şeyleri tutar. Koddan ya da git geçmişinden kola
 - **Ürün tarafı bu repoda değil.** Davetiye, etkinlik galerisi ve yönetim
   paneli 23 Eylül 2026'da [`dijital-cozumlerim`](https://github.com/omerkartli/dijital-cozumlerim)
   reposuna taşındı. Burada yalnızca `urunler.html`, `etkinlik.html`,
-  `admin.html`, `davetiye.html` ve `nida-yunus.html` için **yönlendirme
-  sayfaları** duruyor; paylaşılmış bağlantılar ve üretilmiş QR'lar kırılmasın
-  diye. Sorgu dizesi (`?slug=...`) yönlendirmede korunuyor.
+  `admin.html` ve `davetiye.html` için **yönlendirme sayfaları** duruyor;
+  paylaşılmış bağlantılar ve üretilmiş QR'lar kırılmasın diye. Sorgu dizesi
+  (`?slug=...`) yönlendirmede korunuyor.
+  Kişiye özel davetiye yönlendirme sayfaları (ör. `nida-yunus.html`) düğün
+  bittikten sonra kaldırılıyor; kalıcı olmaları gerekmiyor.
 - Backend (`kisisel-sayfam-backend`) da ayrı repo ve ürün tarafına hizmet
   ediyor; bu sayfanın ona hiç ihtiyacı yok.
 
